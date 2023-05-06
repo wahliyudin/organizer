@@ -4,15 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Dashboard | Front - Admin &amp; Dashboard Template</title>
+    <title>Basic Log In | Front - Admin &amp; Dashboard Template</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/vendor.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/theme.minc619.css?v=1.0') }}">
-    <link rel="preload" href="{{ asset('assets/css/theme.min.css') }}" data-hs-appearance="default" as="style">
-    <link rel="preload" href="{{ asset('assets/css/theme-dark.min.css') }}" data-hs-appearance="dark" as="style">
+    <link rel="stylesheet" href="assets/css/vendor.min.css">
+    <link rel="stylesheet" href="assets/css/theme.minc619.css?v=1.0">
+    <link rel="preload" href="assets/css/theme.min.css" data-hs-appearance="default" as="style">
+    <link rel="preload" href="assets/css/theme-dark.min.css" data-hs-appearance="dark" as="style">
+    <style data-hs-appearance-onload-styles>
+        * {
+            transition: unset !important;
+        }
 
+        body {
+            opacity: 0;
+        }
+    </style>
     <script>
         window.hs_config = {
             "autopath": "@@autopath",
@@ -56,29 +63,26 @@
                 "lang": "en"
             },
             "skipFilesFromBundle": {
-                "dist": ["{{ asset('assets/js/hs.theme-appearance.js') }}",
-                    "{{ asset('assets/js/hs.theme-appearance-charts.js') }}",
-                    "{{ asset('assets/js/demo.js') }}"
+                "dist": ["assets/js/hs.theme-appearance.js", "assets/js/hs.theme-appearance-charts.js",
+                    "assets/js/demo.js"
                 ],
-                "build": ["{{ asset('assets/css/theme.css') }}",
-                    "{{ asset('assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js') }}",
-                    "{{ asset('assets/js/demo.js') }}", "{{ asset('assets/css/theme-dark.html') }}",
-                    "{{ asset('assets/css/docs.css') }}",
-                    "{{ asset('assets/vendor/icon-set/style.html') }}",
-                    "{{ asset('assets/js/hs.theme-appearance.js') }}",
-                    "{{ asset('assets/js/hs.theme-appearance-charts.js') }}",
+                "build": ["assets/css/theme.css",
+                    "assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js",
+                    "assets/js/demo.js", "assets/css/theme-dark.html", "assets/css/docs.css",
+                    "assets/vendor/icon-set/style.html", "assets/js/hs.theme-appearance.js",
+                    "assets/js/hs.theme-appearance-charts.js",
                     "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.html",
-                    "{{ asset('assets/js/demo.js') }}"
+                    "assets/js/demo.js"
                 ]
             },
-            "minifyCSSFiles": ["{{ asset('assets/css/theme.css') }}", "{{ asset('assets/css/theme-dark.css') }}"],
+            "minifyCSSFiles": ["assets/css/theme.css", "assets/css/theme-dark.css"],
             "copyDependencies": {
                 "dist": {
                     "*assets/js/theme-custom.js": ""
                 },
                 "build": {
                     "*assets/js/theme-custom.js": "",
-                    "node_modules/bootstrap-icons/font/*fonts/**": "{{ asset('assets/css') }}"
+                    "node_modules/bootstrap-icons/font/*fonts/**": "assets/css"
                 }
             },
             "buildFolder": "",
@@ -186,35 +190,37 @@
     @stack('css')
 </head>
 
-<body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl footer-offset">
-    @include('layouts.header')
-
-    @include('layouts.sidebar')
-
+<body>
+    <script src="assets/js/hs.theme-appearance.js"></script>
     <main id="content" role="main" class="main">
-        <div class="content container-fluid">
-            @yield('header')
+        <div class="position-fixed top-0 end-0 start-0 bg-img-start"
+            style="height: 32rem; background-image: url(assets/svg/components/card-6.svg);">
+            <!-- Shape -->
+            <div class="shape shape-bottom zi-1">
+                <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                    viewBox="0 0 1921 273">
+                    <polygon fill="#fff" points="0,273 1921,273 1921,0 " />
+                </svg>
+            </div>
+            <!-- End Shape -->
+        </div>
+
+        <!-- Content -->
+        <div class="container py-5">
+            <a class="d-flex justify-content-center mb-5" href="index.html">
+                <img class="zi-2" src="assets/svg/logos/logo.svg" alt="Image Description" style="width: 8rem;">
+            </a>
 
             @yield('content')
+
         </div>
-        @include('layouts.footer')
+        <!-- End Content -->
     </main>
 
-    @stack('modal')
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
-    <script src="{{ asset('assets/js/hs.theme-appearance.js') }}"></script>
-    <script src="{{ asset('assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js') }}">
-    </script>
-    <script>
-        (function() {
-            localStorage.removeItem('hs_theme')
-
-            window.onload = function() {
-                new HSSideNav('.js-navbar-vertical-aside').init()
-            }
-        })()
-    </script>
+    <script src="assets/js/vendor.min.js"></script>
+    <script src="assets/js/theme.min.js"></script>
     @stack('js')
+
 </body>
 
 </html>

@@ -1,73 +1,96 @@
-@extends('layouts.app')
+@extends('auth.layouts.master')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+    <div class="mx-auto" style="max-width: 30rem;">
+        <!-- Card -->
+        <div class="card card-lg mb-5">
+            <div class="card-body">
+                <!-- Form -->
+                <form class="js-validate needs-validation" novalidate>
+                    <div class="text-center">
+                        <div class="mb-5">
+                            <h1 class="display-5">Sign in</h1>
+                            <p>Don't have an account yet? <a class="link" href="authentication-signup-basic.html">Sign up
+                                    here</a></p>
+                        </div>
+                    </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+                    <!-- Form -->
+                    <div class="mb-4">
+                        <label class="form-label" for="signinSrEmail">Your email</label>
+                        <input type="email" class="form-control form-control-lg" name="email" id="signinSrEmail"
+                            tabindex="1" placeholder="email@address.com" aria-label="email@address.com" required>
+                        <span class="invalid-feedback">Please enter a valid email address.</span>
+                    </div>
+                    <!-- End Form -->
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                    <!-- Form -->
+                    <div class="mb-4">
+                        <label class="form-label w-100" for="signupSrPassword" tabindex="0">
+                            <span class="d-flex justify-content-between align-items-center">
+                                <span>Password</span>
+                                <a class="form-label-link mb-0" href="authentication-reset-password-basic.html">Forgot
+                                    Password?</a>
+                            </span>
+                        </label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="input-group input-group-merge" data-hs-validation-validate-class>
+                            <input type="password" class="js-toggle-password form-control form-control-lg" name="password"
+                                id="signupSrPassword" placeholder="8+ characters required"
+                                aria-label="8+ characters required" required minlength="8"
+                                data-hs-toggle-password-options='{
+                                "target": "#changePassTarget",
+                                "defaultClass": "bi-eye-slash",
+                                "showClass": "bi-eye",
+                                "classChangeTarget": "#changePassIcon"
+                                }'>
+                            <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
+                                <i id="changePassIcon" class="bi-eye"></i>
+                            </a>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                        <span class="invalid-feedback">Please enter a valid password.</span>
+                    </div>
+                    <!-- End Form -->
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <!-- Form Check -->
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" value="" id="termsCheckbox">
+                        <label class="form-check-label" for="termsCheckbox">
+                            Remember me
+                        </label>
+                    </div>
+                    <!-- End Form Check -->
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+                    </div>
+                </form>
+                <!-- End Form -->
             </div>
         </div>
+        <!-- End Card -->
     </div>
-</div>
 @endsection
+
+@push('js')
+    <script>
+        (function() {
+            window.onload = function() {
+                // INITIALIZATION OF BOOTSTRAP VALIDATION
+                // =======================================================
+                HSBsValidation.init('.js-validate', {
+                    onSubmit: data => {
+                        data.event.preventDefault()
+                        alert('Submited')
+                    }
+                })
+
+
+                // INITIALIZATION OF TOGGLE PASSWORD
+                // =======================================================
+                new HSTogglePassword('.js-toggle-password')
+            }
+        })()
+    </script>
+@endpush
