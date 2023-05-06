@@ -7,10 +7,10 @@
     <title>Basic Log In | Front - Admin &amp; Dashboard Template</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/vendor.min.css">
-    <link rel="stylesheet" href="assets/css/theme.minc619.css?v=1.0">
-    <link rel="preload" href="assets/css/theme.min.css" data-hs-appearance="default" as="style">
-    <link rel="preload" href="assets/css/theme-dark.min.css" data-hs-appearance="dark" as="style">
+    <link rel="stylesheet" href="{{ asset('assets/css/vendor.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/theme.minc619.css?v=1.0') }}">
+    <link rel="preload" href="{{ asset('assets/css/theme.min.css') }}" data-hs-appearance="default" as="style">
+    <link rel="preload" href="{{ asset('assets/css/theme-dark.min.css') }}" data-hs-appearance="dark" as="style">
     <style data-hs-appearance-onload-styles>
         * {
             transition: unset !important;
@@ -63,26 +63,29 @@
                 "lang": "en"
             },
             "skipFilesFromBundle": {
-                "dist": ["assets/js/hs.theme-appearance.js", "assets/js/hs.theme-appearance-charts.js",
-                    "assets/js/demo.js"
+                "dist": ["{{ asset('assets/js/hs.theme-appearance.js') }}",
+                    "{{ asset('assets/js/hs.theme-appearance-charts.js') }}",
+                    "{{ asset('assets/js/demo.js') }}"
                 ],
-                "build": ["assets/css/theme.css",
-                    "assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js",
-                    "assets/js/demo.js", "assets/css/theme-dark.html", "assets/css/docs.css",
-                    "assets/vendor/icon-set/style.html", "assets/js/hs.theme-appearance.js",
-                    "assets/js/hs.theme-appearance-charts.js",
+                "build": ["{{ asset('assets/css/theme.css') }}",
+                    "{{ asset('assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js') }}",
+                    "{{ asset('assets/js/demo.js') }}", "{{ asset('assets/css/theme-dark.html') }}",
+                    "{{ asset('assets/css/docs.css') }}",
+                    "{{ asset('assets/vendor/icon-set/style.html') }}",
+                    "{{ asset('assets/js/hs.theme-appearance.js') }}",
+                    "{{ asset('assets/js/hs.theme-appearance-charts.js') }}",
                     "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.html",
-                    "assets/js/demo.js"
+                    "{{ asset('assets/js/demo.js') }}"
                 ]
             },
-            "minifyCSSFiles": ["assets/css/theme.css", "assets/css/theme-dark.css"],
+            "minifyCSSFiles": ["{{ asset('assets/css/theme.css') }}", "{{ asset('assets/css/theme-dark.css') }}"],
             "copyDependencies": {
                 "dist": {
                     "*assets/js/theme-custom.js": ""
                 },
                 "build": {
                     "*assets/js/theme-custom.js": "",
-                    "node_modules/bootstrap-icons/font/*fonts/**": "assets/css"
+                    "node_modules/bootstrap-icons/font/*fonts/**": "{{ asset('assets/css') }}"
                 }
             },
             "buildFolder": "",
@@ -191,7 +194,7 @@
 </head>
 
 <body>
-    <script src="assets/js/hs.theme-appearance.js"></script>
+    <script src="{{ asset('assets/js/hs.theme-appearance.js') }}"></script>
     <main id="content" role="main" class="main">
         <div class="position-fixed top-0 end-0 start-0 bg-img-start"
             style="height: 32rem; background-image: url(assets/svg/components/card-6.svg);">
@@ -208,7 +211,8 @@
         <!-- Content -->
         <div class="container py-5">
             <a class="d-flex justify-content-center mb-5" href="index.html">
-                <img class="zi-2" src="assets/svg/logos/logo.svg" alt="Image Description" style="width: 8rem;">
+                <img class="zi-2" src="{{ asset('assets/svg/logos/logo.svg') }}" alt="Image Description"
+                    style="width: 8rem;">
             </a>
 
             @yield('content')
@@ -217,8 +221,8 @@
         <!-- End Content -->
     </main>
 
-    <script src="assets/js/vendor.min.js"></script>
-    <script src="assets/js/theme.min.js"></script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+    <script src="{{ asset('assets/js/theme.min.js') }}"></script>
     @stack('js')
 
 </body>
