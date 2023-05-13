@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AkunController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\JenisAkunController;
 use App\Http\Controllers\PerkiloController;
@@ -49,4 +50,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('jenis-akuns/{jenisAkun:kode}/update', [JenisAkunController::class, 'update'])->name('jenis-akun.update');
     Route::delete('jenis-akuns/{jenisAkun:kode}/destroy', [JenisAkunController::class, 'destroy'])->name('jenis-akun.destroy');
     Route::delete('jenis-akuns/destroys', [JenisAkunController::class, 'destroys'])->name('perkilo.destroys');
+
+    Route::get('akuns', [AkunController::class, 'index'])->name('akun.index');
+    Route::post('akuns/store', [AkunController::class, 'store'])->name('akun.store');
+    Route::post('akuns/{akun:kode}/edit', [AkunController::class, 'edit'])->name('akun.edit');
+    Route::post('akuns/{akun:kode}/update', [AkunController::class, 'update'])->name('akun.update');
+    Route::delete('akuns/{akun:kode}/destroy', [AkunController::class, 'destroy'])->name('akun.destroy');
+    Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('perkilo.destroys');
 });

@@ -53,6 +53,14 @@
                             <span class="nav-link-title">Jenis Akun</span>
                         </a>
                     </div>
+
+                    <div class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('akun.index') ? 'active' : '' }}"
+                            href="{{ route('akun.index') }}" data-placement="left">
+                            <i class="bi-kanban nav-icon"></i>
+                            <span class="nav-link-title">Akun</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
