@@ -23,18 +23,19 @@
             <div class="navbar-vertical-content">
                 <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
                     <div class="nav-item">
-                        <a class="nav-link dropdown-toggle active" href="#navbarVerticalMenuDashboards" role="button"
-                            data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards"
-                            aria-expanded="true" aria-controls="navbarVerticalMenuDashboards">
+                        <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}"
+                            data-placement="left">
                             <i class="bi-house-door nav-icon"></i>
-                            <span class="nav-link-title">Dashboards</span>
+                            <span class="nav-link-title">Dahsboard</span>
                         </a>
+                    </div>
 
-                        <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse show"
-                            data-bs-parent="#navbarVerticalMenu">
-                            <a class="nav-link active" href="index.html">Default</a>
-                            <a class="nav-link " href="dashboard-alternative.html">Alternative</a>
-                        </div>
+                    <div class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('customer.index') ? 'active' : '' }}"
+                            href="{{ route('customer.index') }}" data-placement="left">
+                            <i class="bi-kanban nav-icon"></i>
+                            <span class="nav-link-title">Customer</span>
+                        </a>
                     </div>
                 </div>
             </div>

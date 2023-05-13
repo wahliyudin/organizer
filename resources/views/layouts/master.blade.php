@@ -7,6 +7,7 @@
 
     <title>Dashboard | Front - Admin &amp; Dashboard Template</title>
     <link rel="shortcut icon" href="favicon.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/vendor.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/theme.minc619.css?v=1.0') }}">
@@ -201,10 +202,11 @@
     </main>
 
     @stack('modal')
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     <script src="{{ asset('assets/js/hs.theme-appearance.js') }}"></script>
     <script src="{{ asset('assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js') }}">
     </script>
+    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
+    <script src="{{ asset('assets/js/theme.min.js') }}"></script>
     <script>
         (function() {
             localStorage.removeItem('hs_theme')

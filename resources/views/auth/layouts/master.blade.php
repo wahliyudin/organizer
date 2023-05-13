@@ -16,9 +16,9 @@
             transition: unset !important;
         }
 
-        body {
+        /* body {
             opacity: 0;
-        }
+        } */
     </style>
     <script>
         window.hs_config = {
