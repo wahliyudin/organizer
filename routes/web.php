@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PerkiloController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('customers/{customer:kode}/update', [CustomerController::class, 'update'])->name('customer.update');
     Route::delete('customers/{customer:kode}/destroy', [CustomerController::class, 'destroy'])->name('customer.destroy');
     Route::delete('customers/destroys', [CustomerController::class, 'destroys'])->name('customer.destroys');
+
+    Route::get('perkilos', [PerkiloController::class, 'index'])->name('perkilo.index');
+    Route::post('perkilos/store', [PerkiloController::class, 'store'])->name('perkilo.store');
+    Route::post('perkilos/{perkilo:kode}/edit', [PerkiloController::class, 'edit'])->name('perkilo.edit');
+    Route::post('perkilos/{perkilo:kode}/update', [PerkiloController::class, 'update'])->name('perkilo.update');
+    Route::delete('perkilos/{perkilo:kode}/destroy', [PerkiloController::class, 'destroy'])->name('perkilo.destroy');
+    Route::delete('perkilos/destroys', [PerkiloController::class, 'destroys'])->name('perkilo.destroys');
 });
