@@ -61,6 +61,14 @@
                             <span class="nav-link-title">Akun</span>
                         </a>
                     </div>
+
+                    <div class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('pesanan.index') ? 'active' : '' }}"
+                            href="{{ route('pesanan.index') }}" data-placement="left">
+                            <i class="bi-kanban nav-icon"></i>
+                            <span class="nav-link-title">Pesanan</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

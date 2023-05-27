@@ -4,6 +4,7 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\JenisAkunController;
 use App\Http\Controllers\PerkiloController;
+use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -57,4 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('akuns/{akun:kode}/update', [AkunController::class, 'update'])->name('akun.update');
     Route::delete('akuns/{akun:kode}/destroy', [AkunController::class, 'destroy'])->name('akun.destroy');
     Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('perkilo.destroys');
+
+    Route::get('pesanan', [PesananController::class, 'index'])->name('pesanan.index');
+    Route::post('pesanan/{customer}/customer', [PesananController::class, 'customer'])->name('pesanan.customer');
+    Route::post('pesanan/{perkilo}/paket', [PesananController::class, 'paket'])->name('pesanan.paket');
+    Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::post('pesanan/{pesanan}/edit', [PesananController::class, 'edit'])->name('pesanan.edit');
+    Route::post('pesanan/{pesanan:kode}/update', [PesananController::class, 'update'])->name('pesanan.update');
+    Route::delete('pesanan/{pesanan}/destroy', [PesananController::class, 'destroy'])->name('pesanan.destroy');
 });
