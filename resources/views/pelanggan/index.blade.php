@@ -93,7 +93,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($customers as $customer)
+                        @foreach ($pelanggans as $pelanggan)
                             <tr>
                                 <td>
                                     <div class="form-check">
@@ -102,15 +102,15 @@
                                         <label class="form-check-label" for="datatableCheckAll1"></label>
                                     </div>
                                 </td>
-                                <td>{{ $customer->kode }}</td>
-                                <td>{{ $customer->nama }}</td>
-                                <td>{{ $customer->no_hp }}</td>
-                                <td>{{ $customer->alamat }}</td>
+                                <td>{{ $pelanggan->kode }}</td>
+                                <td>{{ $pelanggan->nama }}</td>
+                                <td>{{ $pelanggan->no_hp }}</td>
+                                <td>{{ $pelanggan->alamat }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <button
                                             class="btn btn-sm d-flex align-items-center gap-1 btn-info btn-active-light-primary edit"
-                                            data-kode="{{ $customer->getKey() }}">
+                                            data-kode="{{ $pelanggan->getKey() }}">
                                             <div class="spinner-border text-light spinner-border-sm loading"
                                                 style="display: none;" role="status">
                                                 <span class="visually-hidden">Loading...</span>
@@ -118,7 +118,7 @@
                                             <span>Edit</span>
                                         </button>
                                         <button class="btn btn-sm btn-danger btn-active-light-danger ms-1 delete"
-                                            data-kode="{{ $customer->getKey() }}">Delete</button>
+                                            data-kode="{{ $pelanggan->getKey() }}">Delete</button>
                                     </div>
                                 </td>
                             </tr>
@@ -208,8 +208,8 @@
                         <i class="bi bi-x-circle-fill"></i>
                         <span>Tutup</span>
                     </button>
-                    <button type="button" data-customer=""
-                        class="btn btn-primary d-flex gap-2 align-items-center simpan store-customer">
+                    <button type="button" data-pelanggan=""
+                        class="btn btn-primary d-flex gap-2 align-items-center simpan store-pelanggan">
                         <i class="bi bi-clipboard-check-fill"></i>
                         <span>Simpan</span>
                         <div class="spinner-border text-light spinner-border-sm loading" style="display: none;"
@@ -272,19 +272,19 @@
                 $('.form-add-modal input[name="nama"]').val('');
                 $('.form-add-modal input[name="no_hp"]').val('');
                 $('.form-add-modal textarea[name="alamat"]').val('');
-                $('#add-modal .simpan').data('customer', '');
-                $('#add-modal .simpan').removeClass('update-customer');
-                $('#add-modal .simpan').addClass('store-customer');
+                $('#add-modal .simpan').data('pelanggan', '');
+                $('#add-modal .simpan').removeClass('update-pelanggan');
+                $('#add-modal .simpan').addClass('store-pelanggan');
                 $('#add-modal #add-modalLabel').text('Tambah Customer');
             });
 
-            $('#add-modal').on('click', '.store-customer', function(e) {
+            $('#add-modal').on('click', '.store-pelanggan', function(e) {
                 e.preventDefault();
                 var postData = new FormData($(".form-add-modal")[0]);
                 $('#add-modal .simpan .loading').show();
                 $.ajax({
                     type: 'POST',
-                    url: "/customers/store",
+                    url: "/pelanggan/store",
                     processData: false,
                     contentType: false,
                     data: postData,
@@ -322,20 +322,20 @@
             $('#datatable').on('click', '.edit', function(e) {
                 e.preventDefault();
                 var target = this;
-                var customer = $(target).data('kode');
+                var pelanggan = $(target).data('kode');
                 $($(target).find('.loading')).show();
                 $.ajax({
                     type: "POST",
-                    url: `/customers/${customer}/edit`,
+                    url: `/pelanggan/${pelanggan}/edit`,
                     dataType: "JSON",
                     success: function(response) {
                         $($(target).find('.loading')).hide();
                         $('.form-add-modal input[name="nama"]').val(response.nama);
                         $('.form-add-modal input[name="no_hp"]').val(response.no_hp);
                         $('.form-add-modal textarea[name="alamat"]').val(response.alamat);
-                        $('#add-modal .simpan').data('customer', response.key);
-                        $('#add-modal .simpan').addClass('update-customer');
-                        $('#add-modal .simpan').removeClass('store-customer');
+                        $('#add-modal .simpan').data('pelanggan', response.key);
+                        $('#add-modal .simpan').addClass('update-pelanggan');
+                        $('#add-modal .simpan').removeClass('store-pelanggan');
                         $('#add-modal #add-modalLabel').text('Ubah Customer');
                         $('#add-modal').modal('show');
                     },
@@ -359,14 +359,14 @@
                 });
             });
 
-            $('#add-modal').on('click', '.update-customer', function(e) {
+            $('#add-modal').on('click', '.update-pelanggan', function(e) {
                 e.preventDefault();
                 var postData = new FormData($(".form-add-modal")[0]);
                 $('#add-modal .simpan .loading').show();
-                var customer = $(this).data('customer');
+                var pelanggan = $(this).data('pelanggan');
                 $.ajax({
                     type: 'POST',
-                    url: `/customers/${customer}/update`,
+                    url: `/pelanggan/${pelanggan}/update`,
                     processData: false,
                     contentType: false,
                     data: postData,
@@ -402,7 +402,7 @@
             });
             $('#datatable').on('click', '.delete', function(e) {
                 e.preventDefault();
-                var customer = $(this).data('kode');
+                var pelanggan = $(this).data('kode');
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -415,7 +415,7 @@
                         return new Promise(function(resolve) {
                             $.ajax({
                                     type: "DELETE",
-                                    url: `/customers/${customer}/destroy`,
+                                    url: `/pelanggan/${pelanggan}/destroy`,
                                     dataType: 'JSON',
                                 })
                                 .done(function(myAjaxJsonResponse) {
@@ -466,7 +466,7 @@
                         return new Promise(function(resolve) {
                             $.ajax({
                                     type: "DELETE",
-                                    url: `/customers/destroys`,
+                                    url: `/pelanggan/destroys`,
                                     data: {
                                         kodes
                                     },

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use App\Models\Perkilo;
+use App\Models\Pelanggan;
+use App\Models\DataAyam;
 use App\Models\Pesanan;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
@@ -12,14 +12,14 @@ class PesananController extends Controller
 {
     public function index()
     {
-        $customers = Customer::query()->get();
-        $pakets = Perkilo::query()->get();
+        $customers = Pelanggan::query()->get();
+        $pakets = DataAyam::query()->get();
         $pesanans = Pesanan::query()->get();
         $kode_po = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
         return view('pesanan.index', compact('pesanans', 'customers', 'pakets', 'kode_po'));
     }
 
-    public function customer(Customer $customer)
+    public function customer(Pelanggan $customer)
     {
         try {
             return response()->json([
@@ -30,12 +30,12 @@ class PesananController extends Controller
         }
     }
 
-    public function paket(Perkilo $perkilo)
+    public function paket(DataAyam $dataAyam)
     {
         try {
             return response()->json([
-                'nama' => $perkilo->nama,
-                'harga' => number_format($perkilo->harga, 0, ',', '.')
+                'nama' => $dataAyam->nama,
+                'harga' => number_format($dataAyam->harga, 0, ',', '.')
             ]);
         } catch (\Throwable $th) {
             throw $th;

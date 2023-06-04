@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerRequest;
-use App\Models\Customer;
+use App\Http\Requests\PelangganRequest;
+use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Yajra\DataTables\Facades\DataTables;
 
-class CustomerController extends Controller
+class PelangganController extends Controller
 {
     public function index()
     {
-        $customers = Customer::query()->get();
-        return view('customer.index', compact('customers'));
+        $pelanggans = Pelanggan::query()->get();
+        return view('pelanggan.index', compact('pelanggans'));
     }
 
-    public function store(CustomerRequest $request)
+    public function store(PelangganRequest $request)
     {
         try {
-            Customer::query()->create([
+            Pelanggan::query()->create([
                 'nama' => $request->nama,
                 'no_hp' => $request->no_hp,
                 'alamat' => $request->alamat,
@@ -32,24 +32,24 @@ class CustomerController extends Controller
         }
     }
 
-    public function edit(Customer $customer)
+    public function edit(Pelanggan $pelanggan)
     {
         try {
             return response()->json([
-                'key' => $customer->getKey(),
-                'nama' => $customer->nama,
-                'no_hp' => $customer->no_hp,
-                'alamat' => $customer->alamat,
+                'key' => $pelanggan->getKey(),
+                'nama' => $pelanggan->nama,
+                'no_hp' => $pelanggan->no_hp,
+                'alamat' => $pelanggan->alamat,
             ]);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public function update(CustomerRequest $request, Customer $customer)
+    public function update(PelangganRequest $request, Pelanggan $pelanggan)
     {
         try {
-            $customer->update([
+            $pelanggan->update([
                 'nama' => $request->nama,
                 'no_hp' => $request->no_hp,
                 'alamat' => $request->alamat,
@@ -62,10 +62,10 @@ class CustomerController extends Controller
         }
     }
 
-    public function destroy(Customer $customer)
+    public function destroy(Pelanggan $pelanggan)
     {
         try {
-            $customer->delete();
+            $pelanggan->delete();
             return response()->json([
                 'message' => "Berhasil dihapus"
             ]);
@@ -77,7 +77,7 @@ class CustomerController extends Controller
     public function destroys(Request $request)
     {
         try {
-            Customer::query()->whereIn('kode', $request->kodes)->delete();
+            Pelanggan::query()->whereIn('kode', $request->kodes)->delete();
             return response()->json([
                 'message' => "Berhasil dihapus"
             ]);

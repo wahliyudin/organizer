@@ -31,10 +31,10 @@
                     </div>
 
                     <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('customer.index') ? 'active' : '' }}"
-                            href="{{ route('customer.index') }}" data-placement="left">
+                        <a class="nav-link {{ request()->routeIs('pelanggan.index') ? 'active' : '' }}"
+                            href="{{ route('pelanggan.index') }}" data-placement="left">
                             <i class="bi-kanban nav-icon"></i>
-                            <span class="nav-link-title">Customer</span>
+                            <span class="nav-link-title">Pelanggan</span>
                         </a>
                     </div>
 

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AkunController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\JenisAkunController;
 use App\Http\Controllers\PerkiloController;
 use App\Http\Controllers\PesananController;
@@ -31,12 +31,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('customers', [CustomerController::class, 'index'])->name('customer.index');
-    Route::post('customers/store', [CustomerController::class, 'store'])->name('customer.store');
-    Route::post('customers/{customer:kode}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
-    Route::post('customers/{customer:kode}/update', [CustomerController::class, 'update'])->name('customer.update');
-    Route::delete('customers/{customer:kode}/destroy', [CustomerController::class, 'destroy'])->name('customer.destroy');
-    Route::delete('customers/destroys', [CustomerController::class, 'destroys'])->name('customer.destroys');
+    Route::get('pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+    Route::post('pelanggan/store', [PelangganController::class, 'store'])->name('pelanggan.store');
+    Route::post('pelanggan/{pelanggan:kode}/edit', [PelangganController::class, 'edit'])->name('pelanggan.edit');
+    Route::post('pelanggan/{pelanggan:kode}/update', [PelangganController::class, 'update'])->name('pelanggan.update');
+    Route::delete('pelanggan/{pelanggan:kode}/destroy', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+    Route::delete('pelanggan/destroys', [PelangganController::class, 'destroys'])->name('pelanggan.destroys');
 
     Route::get('perkilos', [PerkiloController::class, 'index'])->name('perkilo.index');
     Route::post('perkilos/store', [PerkiloController::class, 'store'])->name('perkilo.store');
@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('perkilo.destroys');
 
     Route::get('pesanan', [PesananController::class, 'index'])->name('pesanan.index');
-    Route::post('pesanan/{customer}/customer', [PesananController::class, 'customer'])->name('pesanan.customer');
+    Route::post('pesanan/{pelanggan}/pelanggan', [PesananController::class, 'pelanggan'])->name('pesanan.pelanggan');
     Route::post('pesanan/{perkilo}/paket', [PesananController::class, 'paket'])->name('pesanan.paket');
     Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
     Route::post('pesanan/{pesanan}/edit', [PesananController::class, 'edit'])->name('pesanan.edit');
