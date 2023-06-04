@@ -33,7 +33,7 @@
                     <div class="nav-item">
                         <a class="nav-link {{ request()->routeIs('pelanggan.index') ? 'active' : '' }}"
                             href="{{ route('pelanggan.index') }}" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
+                            <i class="bi bi-people nav-icon"></i>
                             <span class="nav-link-title">Pelanggan</span>
                         </a>
                     </div>
@@ -41,7 +41,7 @@
                     <div class="nav-item">
                         <a class="nav-link {{ request()->routeIs('data-ayam.index') ? 'active' : '' }}"
                             href="{{ route('data-ayam.index') }}" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
+                            <i class="bi bi-box-fill nav-icon"></i>
                             <span class="nav-link-title">Data Ayam</span>
                         </a>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="nav-item">
                         <a class="nav-link {{ request()->routeIs('stok.index') ? 'active' : '' }}"
                             href="{{ route('stok.index') }}" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
+                            <i class="bi bi-boxes nav-icon"></i>
                             <span class="nav-link-title">Stok</span>
                         </a>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="nav-item">
                         <a class="nav-link {{ request()->routeIs('jenis-akun.index') ? 'active' : '' }}"
                             href="{{ route('jenis-akun.index') }}" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
+                            <i class="bi bi-currency-exchange nav-icon"></i>
                             <span class="nav-link-title">Jenis Akun</span>
                         </a>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="nav-item">
                         <a class="nav-link {{ request()->routeIs('akun.index') ? 'active' : '' }}"
                             href="{{ route('akun.index') }}" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
+                            <i class="bi bi-coin nav-icon"></i>
                             <span class="nav-link-title">Akun</span>
                         </a>
                     </div>

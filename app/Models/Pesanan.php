@@ -15,7 +15,7 @@ class Pesanan extends Model
 
     protected $primaryKey = "kode";
 
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $keyType = 'string';
 
