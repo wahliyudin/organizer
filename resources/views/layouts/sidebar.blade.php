@@ -39,10 +39,10 @@
                     </div>
 
                     <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('perkilo.index') ? 'active' : '' }}"
-                            href="{{ route('perkilo.index') }}" data-placement="left">
+                        <a class="nav-link {{ request()->routeIs('data-ayam.index') ? 'active' : '' }}"
+                            href="{{ route('data-ayam.index') }}" data-placement="left">
                             <i class="bi-kanban nav-icon"></i>
-                            <span class="nav-link-title">Perkilo</span>
+                            <span class="nav-link-title">Data Ayam</span>
                         </a>
                     </div>
 

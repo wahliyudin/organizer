@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PerkiloRequest;
-use App\Models\Perkilo;
+use App\Http\Requests\DataAyamRequest;
+use App\Models\DataAyam;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class PerkiloController extends Controller
+class DataAyamController extends Controller
 {
     public function index()
     {
-        $perkilos = Perkilo::query()->get();
-        return view('perkilo.index', compact('perkilos'));
+        $dataAyams = DataAyam::query()->get();
+        $kode = (new DataAyam())->generateKode();
+        return view('data-ayam.index', compact('dataAyams', 'kode'));
     }
 
-    public function store(PerkiloRequest $request)
+    public function store(DataAyamRequest $request)
     {
         try {
-            Perkilo::query()->create([
-                'nama' => $request->nama,
-                'harga' => $request->harga,
+            DataAyam::query()->create([
+                'harga' => str($request->harga)->replace('.', ''),
             ]);
             return response()->json([
                 'message' => "Berhasil disimpan"
@@ -30,25 +31,23 @@ class PerkiloController extends Controller
         }
     }
 
-    public function edit(Perkilo $perkilo)
+    public function edit(DataAyam $dataAyam)
     {
         try {
             return response()->json([
-                'key' => $perkilo->getKey(),
-                'nama' => $perkilo->nama,
-                'harga' => $perkilo->harga,
+                'key' => $dataAyam->getKey(),
+                'harga' => $dataAyam->harga,
             ]);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public function update(PerkiloRequest $request, Perkilo $perkilo)
+    public function update(DataAyamRequest $request, DataAyam $dataAyam)
     {
         try {
-            $perkilo->update([
-                'nama' => $request->nama,
-                'harga' => $request->harga,
+            $dataAyam->update([
+                'harga' => str($request->harga)->replace('.', ''),
             ]);
             return response()->json([
                 'message' => "Berhasil diubah"
@@ -58,10 +57,10 @@ class PerkiloController extends Controller
         }
     }
 
-    public function destroy(Perkilo $perkilo)
+    public function destroy(DataAyam $dataAyam)
     {
         try {
-            $perkilo->delete();
+            $dataAyam->delete();
             return response()->json([
                 'message' => "Berhasil dihapus"
             ]);
@@ -73,7 +72,7 @@ class PerkiloController extends Controller
     public function destroys(Request $request)
     {
         try {
-            Perkilo::query()->whereIn('kode', $request->kodes)->delete();
+            DataAyam::query()->whereIn('kode', $request->kodes)->delete();
             return response()->json([
                 'message' => "Berhasil dihapus"
             ]);

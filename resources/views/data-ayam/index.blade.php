@@ -7,7 +7,7 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h1 class="page-header-title">Perkilo</h1>
+                <h1 class="page-header-title">Data Ayam</h1>
             </div>
         </div>
     </div>
@@ -76,14 +76,13 @@
                                 </div>
                             </th>
                             <th class="table-column-ps-0">Kode</th>
-                            <th>Nama</th>
                             <th>Harga</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($perkilos as $perkilo)
+                        @foreach ($dataAyams as $dataAyam)
                             <tr>
                                 <td>
                                     <div class="form-check">
@@ -92,14 +91,13 @@
                                         <label class="form-check-label" for="datatableCheckAll1"></label>
                                     </div>
                                 </td>
-                                <td>{{ $perkilo->kode }}</td>
-                                <td>{{ $perkilo->nama }}</td>
-                                <td>{{ $perkilo->harga }}</td>
+                                <td>{{ $dataAyam->kode }}</td>
+                                <td>{{ number_format($dataAyam->harga, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <button
                                             class="btn btn-sm d-flex align-items-center gap-1 btn-info btn-active-light-primary edit"
-                                            data-kode="{{ $perkilo->getKey() }}">
+                                            data-kode="{{ $dataAyam->getKey() }}">
                                             <div class="spinner-border text-light spinner-border-sm loading"
                                                 style="display: none;" role="status">
                                                 <span class="visually-hidden">Loading...</span>
@@ -107,7 +105,7 @@
                                             <span>Edit</span>
                                         </button>
                                         <button class="btn btn-sm btn-danger btn-active-light-danger ms-1 delete"
-                                            data-kode="{{ $perkilo->getKey() }}">Delete</button>
+                                            data-kode="{{ $dataAyam->getKey() }}">Delete</button>
                                     </div>
                                 </td>
                             </tr>
@@ -171,20 +169,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="add-modalLabel">Tambah Perkilo</h5>
+                    <h5 class="modal-title" id="add-modalLabel">Tambah Data Ayam</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="form-add-modal">
                         <div class="mb-3">
-                            <label class="form-label" for="nama">Nama</label>
-                            <input type="text" id="nama" name="nama" class="form-control"
-                                placeholder="John Doe">
+                            <label class="form-label" for="kode">Kode</label>
+                            <input type="text" id="kode" name="kode" readonly value="{{ $kode }}"
+                                class="form-control">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="harga">Harga</label>
-                            <input type="text" id="harga" name="harga" class="form-control"
-                                placeholder="John Doe">
+                            <input type="text" id="harga" name="harga" class="form-control uang">
                         </div>
                     </form>
                 </div>
@@ -193,8 +190,8 @@
                         <i class="bi bi-x-circle-fill"></i>
                         <span>Tutup</span>
                     </button>
-                    <button type="button" data-perkilo=""
-                        class="btn btn-primary d-flex gap-2 align-items-center simpan store-perkilo">
+                    <button type="button" data-data-ayam=""
+                        class="btn btn-primary d-flex gap-2 align-items-center simpan store-data-ayam">
                         <i class="bi bi-clipboard-check-fill"></i>
                         <span>Simpan</span>
                         <div class="spinner-border text-light spinner-border-sm loading" style="display: none;"
@@ -210,6 +207,7 @@
 
 @push('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
     <script>
         $(document).on('ready', function() {
             $.ajaxSetup({
@@ -217,9 +215,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            $('.uang').mask('0.000.000.000', {
+                reverse: true
+            });
             HSCore.components.HSDatatables.init($('#datatable'), {
                 columnDefs: [{
-                    targets: [0, 4],
+                    targets: [0, 3],
                     width: "5%",
                     orderable: false
                 }],
@@ -254,21 +255,20 @@
 
             $('.add').click(function(e) {
                 e.preventDefault();
-                $('.form-add-modal input[name="nama"]').val('');
                 $('.form-add-modal input[name="harga"]').val('');
-                $('#add-modal .simpan').data('perkilo', '');
-                $('#add-modal .simpan').removeClass('update-perkilo');
-                $('#add-modal .simpan').addClass('store-perkilo');
-                $('#add-modal #add-modalLabel').text('Tambah Perkilo');
+                $('#add-modal .simpan').data('data-ayam', '');
+                $('#add-modal .simpan').removeClass('update-data-ayam');
+                $('#add-modal .simpan').addClass('store-data-ayam');
+                $('#add-modal #add-modalLabel').text('Tambah Data Ayam');
             });
 
-            $('#add-modal').on('click', '.store-perkilo', function(e) {
+            $('#add-modal').on('click', '.store-data-ayam', function(e) {
                 e.preventDefault();
                 var postData = new FormData($(".form-add-modal")[0]);
                 $('#add-modal .simpan .loading').show();
                 $.ajax({
                     type: 'POST',
-                    url: "/perkilos/store",
+                    url: "/data-ayam/store",
                     processData: false,
                     contentType: false,
                     data: postData,
@@ -306,20 +306,20 @@
             $('#datatable').on('click', '.edit', function(e) {
                 e.preventDefault();
                 var target = this;
-                var perkilo = $(target).data('kode');
+                var dataAyam = $(target).data('kode');
                 $($(target).find('.loading')).show();
                 $.ajax({
                     type: "POST",
-                    url: `/perkilos/${perkilo}/edit`,
+                    url: `/data-ayam/${dataAyam}/edit`,
                     dataType: "JSON",
                     success: function(response) {
                         $($(target).find('.loading')).hide();
-                        $('.form-add-modal input[name="nama"]').val(response.nama);
-                        $('.form-add-modal input[name="harga"]').val(response.harga);
-                        $('#add-modal .simpan').data('perkilo', response.key);
-                        $('#add-modal .simpan').addClass('update-perkilo');
-                        $('#add-modal .simpan').removeClass('store-perkilo');
-                        $('#add-modal #add-modalLabel').text('Ubah Perkilo');
+                        $('.form-add-modal input[name="harga"]').val(response.harga).trigger(
+                            'input');
+                        $('#add-modal .simpan').data('data-ayam', response.key);
+                        $('#add-modal .simpan').addClass('update-data-ayam');
+                        $('#add-modal .simpan').removeClass('store-data-ayam');
+                        $('#add-modal #add-modalLabel').text('Ubah Data Ayam');
                         $('#add-modal').modal('show');
                     },
                     error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
@@ -342,14 +342,14 @@
                 });
             });
 
-            $('#add-modal').on('click', '.update-perkilo', function(e) {
+            $('#add-modal').on('click', '.update-data-ayam', function(e) {
                 e.preventDefault();
                 var postData = new FormData($(".form-add-modal")[0]);
                 $('#add-modal .simpan .loading').show();
-                var perkilo = $(this).data('perkilo');
+                var dataAyam = $(this).data('data-ayam');
                 $.ajax({
                     type: 'POST',
-                    url: `/perkilos/${perkilo}/update`,
+                    url: `/data-ayam/${dataAyam}/update`,
                     processData: false,
                     contentType: false,
                     data: postData,
@@ -385,7 +385,7 @@
             });
             $('#datatable').on('click', '.delete', function(e) {
                 e.preventDefault();
-                var perkilo = $(this).data('kode');
+                var dataAyam = $(this).data('kode');
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -398,7 +398,7 @@
                         return new Promise(function(resolve) {
                             $.ajax({
                                     type: "DELETE",
-                                    url: `/perkilos/${perkilo}/destroy`,
+                                    url: `/data-ayam/${dataAyam}/destroy`,
                                     dataType: 'JSON',
                                 })
                                 .done(function(myAjaxJsonResponse) {
@@ -449,7 +449,7 @@
                         return new Promise(function(resolve) {
                             $.ajax({
                                     type: "DELETE",
-                                    url: `/perkilos/destroys`,
+                                    url: `/data-ayam/destroys`,
                                     data: {
                                         kodes
                                     },

@@ -3,7 +3,7 @@
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\JenisAkunController;
-use App\Http\Controllers\PerkiloController;
+use App\Http\Controllers\DataAyamController;
 use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,26 +38,26 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('pelanggan/{pelanggan:kode}/destroy', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
     Route::delete('pelanggan/destroys', [PelangganController::class, 'destroys'])->name('pelanggan.destroys');
 
-    Route::get('perkilos', [PerkiloController::class, 'index'])->name('perkilo.index');
-    Route::post('perkilos/store', [PerkiloController::class, 'store'])->name('perkilo.store');
-    Route::post('perkilos/{perkilo:kode}/edit', [PerkiloController::class, 'edit'])->name('perkilo.edit');
-    Route::post('perkilos/{perkilo:kode}/update', [PerkiloController::class, 'update'])->name('perkilo.update');
-    Route::delete('perkilos/{perkilo:kode}/destroy', [PerkiloController::class, 'destroy'])->name('perkilo.destroy');
-    Route::delete('perkilos/destroys', [PerkiloController::class, 'destroys'])->name('perkilo.destroys');
+    Route::get('data-ayam', [DataAyamController::class, 'index'])->name('data-ayam.index');
+    Route::post('data-ayam/store', [DataAyamController::class, 'store'])->name('data-ayam.store');
+    Route::post('data-ayam/{dataAyam:kode}/edit', [DataAyamController::class, 'edit'])->name('data-ayam.edit');
+    Route::post('data-ayam/{dataAyam:kode}/update', [DataAyamController::class, 'update'])->name('data-ayam.update');
+    Route::delete('data-ayam/{dataAyam:kode}/destroy', [DataAyamController::class, 'destroy'])->name('data-ayam.destroy');
+    Route::delete('data-ayam/destroys', [DataAyamController::class, 'destroys'])->name('data-ayam.destroys');
 
     Route::get('jenis-akuns', [JenisAkunController::class, 'index'])->name('jenis-akun.index');
     Route::post('jenis-akuns/store', [JenisAkunController::class, 'store'])->name('jenis-akun.store');
     Route::post('jenis-akuns/{jenisAkun:kode}/edit', [JenisAkunController::class, 'edit'])->name('jenis-akun.edit');
     Route::post('jenis-akuns/{jenisAkun:kode}/update', [JenisAkunController::class, 'update'])->name('jenis-akun.update');
     Route::delete('jenis-akuns/{jenisAkun:kode}/destroy', [JenisAkunController::class, 'destroy'])->name('jenis-akun.destroy');
-    Route::delete('jenis-akuns/destroys', [JenisAkunController::class, 'destroys'])->name('perkilo.destroys');
+    Route::delete('jenis-akuns/destroys', [JenisAkunController::class, 'destroys'])->name('data-ayam.destroys');
 
     Route::get('akuns', [AkunController::class, 'index'])->name('akun.index');
     Route::post('akuns/store', [AkunController::class, 'store'])->name('akun.store');
     Route::post('akuns/{akun:kode}/edit', [AkunController::class, 'edit'])->name('akun.edit');
     Route::post('akuns/{akun:kode}/update', [AkunController::class, 'update'])->name('akun.update');
     Route::delete('akuns/{akun:kode}/destroy', [AkunController::class, 'destroy'])->name('akun.destroy');
-    Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('perkilo.destroys');
+    Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('akun.destroys');
 
     Route::get('pesanan', [PesananController::class, 'index'])->name('pesanan.index');
     Route::post('pesanan/{pelanggan}/pelanggan', [PesananController::class, 'pelanggan'])->name('pesanan.pelanggan');

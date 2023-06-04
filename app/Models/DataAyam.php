@@ -15,7 +15,7 @@ class DataAyam extends Model
 
     protected $primaryKey = "kode";
 
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $keyType = 'string';
 
@@ -37,5 +37,10 @@ class DataAyam extends Model
         self::creating(function ($model) {
             $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
         });
+    }
+
+    public function generateKode()
+    {
+        return IdGenerator::generate(['table' => 'data_ayam', 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
     }
 }
