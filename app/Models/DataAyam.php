@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pesanan extends Model
+class DataAyam extends Model
 {
     use HasFactory;
 
-    protected $table = 'pesanan';
+    protected $table = 'data_ayam';
 
     protected $primaryKey = "kode";
 
@@ -17,8 +17,6 @@ class Pesanan extends Model
 
     protected $fillable = [
         'kode',
-        'kode_customer',
-        'tanggal',
-        'kode_jurnal',
+        'harga',
     ];
 }
