@@ -47,6 +47,14 @@
                     </div>
 
                     <div class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('stok.index') ? 'active' : '' }}"
+                            href="{{ route('stok.index') }}" data-placement="left">
+                            <i class="bi-kanban nav-icon"></i>
+                            <span class="nav-link-title">Stok</span>
+                        </a>
+                    </div>
+
+                    <div class="nav-item">
                         <a class="nav-link {{ request()->routeIs('jenis-akun.index') ? 'active' : '' }}"
                             href="{{ route('jenis-akun.index') }}" data-placement="left">
                             <i class="bi-kanban nav-icon"></i>

@@ -5,6 +5,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\JenisAkunController;
 use App\Http\Controllers\DataAyamController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\StokController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('data-ayam/{dataAyam:kode}/update', [DataAyamController::class, 'update'])->name('data-ayam.update');
     Route::delete('data-ayam/{dataAyam:kode}/destroy', [DataAyamController::class, 'destroy'])->name('data-ayam.destroy');
     Route::delete('data-ayam/destroys', [DataAyamController::class, 'destroys'])->name('data-ayam.destroys');
+
+    Route::get('stok', [StokController::class, 'index'])->name('stok.index');
+    Route::post('stok/store', [StokController::class, 'store'])->name('stok.store');
+    Route::post('stok/{stok}/edit', [StokController::class, 'edit'])->name('stok.edit');
+    Route::post('stok/{stok}/update', [StokController::class, 'update'])->name('stok.update');
+    Route::delete('stok/{stok}/destroy', [StokController::class, 'destroy'])->name('stok.destroy');
+    Route::delete('stok/destroys', [StokController::class, 'destroys'])->name('stok.destroys');
 
     Route::get('jenis-akuns', [JenisAkunController::class, 'index'])->name('jenis-akun.index');
     Route::post('jenis-akuns/store', [JenisAkunController::class, 'store'])->name('jenis-akun.store');

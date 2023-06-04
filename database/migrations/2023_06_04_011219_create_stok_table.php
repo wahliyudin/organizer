@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stok', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_ayam');
+            $table->string('kode_data_ayam');
             $table->integer('jumlah');
             $table->integer('berat');
             $table->timestamps();

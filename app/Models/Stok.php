@@ -12,7 +12,7 @@ class Stok extends Model
     protected $table = 'stok';
 
     protected $fillable = [
-        'kode_ayam',
+        'kode_data_ayam',
         'jumlah',
         'berat',
     ];
