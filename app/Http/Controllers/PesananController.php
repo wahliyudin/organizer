@@ -81,11 +81,13 @@ class PesananController extends Controller
                 'kode' => $request->kode,
                 'kode_pelanggan' => $request->kode_pelanggan,
                 'tanggal' => $request->tanggal,
+                'kode_akun' => $request->kode_akun,
+                'keterangan' => $request->keterangan,
                 'kode_jurnal' => $jurnal->kode,
             ]);
             $pesanan->pesananDetails()->createMany($request->detail_transaksi);
             return response()->json([
-                'message' => 'Successfully'
+                'message' => 'Berhasil disimpan'
             ]);
         } catch (\Throwable $th) {
             throw $th;
@@ -95,17 +97,11 @@ class PesananController extends Controller
     public function edit(Pesanan $pesanan)
     {
         try {
-            $pesanan->load(['pelanggan', 'perkilo']);
-            return response()->json([
-                'kode' => $pesanan->kode,
-                'tanggal' => $pesanan->tanggal,
-                'kode_pelanggan' => $pesanan->kode_pelanggan,
-                'nama_pelanggan' => $pesanan->pelanggan?->nama,
-                'kode_paket' => $pesanan->kode_perkilo,
-                'nama_paket' => $pesanan->perkilo?->nama,
-                'harga_paket' => number_format($pesanan->perkilo?->harga, 0, ',', '.'),
-                'down_payment' => number_format($pesanan->down_payment, 0, ',', '.'),
-            ]);
+            $pelanggans = Pelanggan::query()->get();
+            $dataAyams = DataAyam::query()->get();
+            $akuns = Akun::query()->get();
+            $pesanan->load('pesananDetails.dataAyam', 'pelanggan');
+            return view('pesanan.edit', compact('pesanan', 'pelanggans', 'dataAyams', 'akuns'));
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -114,14 +110,29 @@ class PesananController extends Controller
     public function update(Request $request, Pesanan $pesanan)
     {
         try {
+            $jurnal = Jurnal::query()->where('kode', $pesanan->kode_jurnal)->first();
+            $jurnal?->update([
+                'tanggal' => $request->tanggal,
+                'keterangan' => $request->keterangan,
+            ]);
+            $jurnal->jurnalDetails()->delete();
+            $jurnal->jurnalDetails()->create([
+                'kode_akun' => $request->kode_akun,
+                'kredit' => str($request->total)->replace('.', '')->value(),
+            ]);
             $pesanan->update([
                 'kode' => $request->kode,
-                'tanggal' => $request->tanggal,
                 'kode_pelanggan' => $request->kode_pelanggan,
-                'kode_perkilo' => $request->kode_paket,
-                'down_payment' => str($request->down_payment)->replace('.', ''),
+                'tanggal' => $request->tanggal,
+                'kode_akun' => $request->kode_akun,
+                'keterangan' => $request->keterangan,
+                'kode_jurnal' => $jurnal->kode,
             ]);
-            return response()->json([]);
+            $pesanan->pesananDetails()->delete();
+            $pesanan->pesananDetails()->createMany($request->detail_transaksi);
+            return response()->json([
+                'message' => "Berhasil diubah"
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -130,6 +141,7 @@ class PesananController extends Controller
     public function destroy(Pesanan $pesanan)
     {
         try {
+            $pesanan->jurnal()->delete();
             $pesanan->delete();
             return response()->json([
                 'message' => "Successfully"

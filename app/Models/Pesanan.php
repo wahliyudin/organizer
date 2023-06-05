@@ -23,6 +23,8 @@ class Pesanan extends Model
         'kode',
         'kode_pelanggan',
         'tanggal',
+        'kode_akun',
+        'keterangan',
         'kode_jurnal',
     ];
 
@@ -49,5 +51,10 @@ class Pesanan extends Model
     public function pesananDetails()
     {
         return $this->hasMany(PesananDetail::class, 'kode_pesanan', 'kode');
+    }
+
+    public function jurnal()
+    {
+        return $this->belongsTo(Jurnal::class, 'kode_jurnal', 'kode');
     }
 }

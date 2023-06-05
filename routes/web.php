@@ -72,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('pesanan/{dataAyam:kode}/data-ayam', [PesananController::class, 'dataAyam'])->name('pesanan.data-ayam');
     Route::get('pesanan/create', [PesananController::class, 'create'])->name('pesanan.create');
     Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
-    Route::post('pesanan/{pesanan}/edit', [PesananController::class, 'edit'])->name('pesanan.edit');
+    Route::get('pesanan/{pesanan:kode}/edit', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('pesanan/{pesanan:kode}/update', [PesananController::class, 'update'])->name('pesanan.update');
     Route::delete('pesanan/{pesanan}/destroy', [PesananController::class, 'destroy'])->name('pesanan.destroy');
 });

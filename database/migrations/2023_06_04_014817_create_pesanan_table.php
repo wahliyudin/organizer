@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('pesanan', function (Blueprint $table) {
             $table->string('kode')->primary();
             $table->string('kode_pelanggan');
+            $table->string('kode_akun');
+            $table->string('keterangan');
             $table->date('tanggal');
             $table->string('kode_jurnal');
             $table->timestamps();
+
+            $table->foreign('kode_jurnal')->references('kode')->on('jurnal')->cascadeOnDelete();
         });
     }
 

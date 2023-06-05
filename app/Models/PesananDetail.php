@@ -16,4 +16,9 @@ class PesananDetail extends Model
         'kode_data_ayam',
         'kuantitas',
     ];
+
+    public function dataAyam()
+    {
+        return $this->belongsTo(DataAyam::class, 'kode_data_ayam', 'kode');
+    }
 }
