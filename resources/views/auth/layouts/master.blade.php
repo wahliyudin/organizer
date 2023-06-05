@@ -209,9 +209,9 @@
         </div>
 
         <!-- Content -->
-        <div class="container py-5">
-            <a class="d-flex justify-content-center mb-5" href="index.html">
-                <img class="zi-2" src="{{ asset('assets/svg/logos/logo.svg') }}" alt="Image Description"
+        <div class="container py-2">
+            <a class="d-flex justify-content-center mb-1" href="{{ route('home') }}">
+                <img class="zi-2" src="{{ asset('assets/img/logo.png') }}" alt="Image Description"
                     style="width: 8rem;">
             </a>
 
