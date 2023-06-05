@@ -68,10 +68,6 @@
                             <input type="text" id="nama_customer" readonly name="nama_customer"
                                 value="{{ $pesanan->pelanggan?->nama }}" class="form-control">
                         </div>
-                        <div class="mb-3 col-md-4">
-                            <label class="form-label" for="keterangan">Keterangan</label>
-                            <textarea id="keterangan" name="keterangan" class="form-control">{{ $pesanan->keterangan }}</textarea>
-                        </div>
                     </div>
                     <table id="detail-pesanan" class="table table-bordered">
                         <thead>

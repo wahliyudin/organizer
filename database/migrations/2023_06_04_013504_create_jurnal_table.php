@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('jurnal', function (Blueprint $table) {
             $table->string('kode')->primary();
             $table->date('tanggal');
-            $table->string('keterangan');
             $table->timestamps();
         });
     }

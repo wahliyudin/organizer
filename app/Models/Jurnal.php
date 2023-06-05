@@ -22,7 +22,6 @@ class Jurnal extends Model
     protected $fillable = [
         'kode',
         'tanggal',
-        'keterangan',
     ];
 
     protected function kode(): Attribute

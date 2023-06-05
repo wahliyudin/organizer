@@ -7,7 +7,7 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h1 class="page-header-title">Pelanggan</h1>
+                <h1 class="page-header-title">Pembayaran</h1>
             </div>
         </div>
     </div>
@@ -27,15 +27,6 @@
                         <button type="button" class="btn btn-outline-danger btn-sm mb-2 mb-sm-0 me-2 delete-all">
                             <i class="bi-trash"></i> Delete
                         </button>
-                        {{-- <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-archive"></i> Archive
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-upload"></i> Publish
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0" href="javascript:;">
-                            <i class="bi-x-lg"></i> Unpublish
-                        </a> --}}
                     </div>
                 </div>
                 <!-- End Datatable Info -->
@@ -55,18 +46,17 @@
                                 <i class="bi-search"></i>
                             </div>
                             <input id="datatableSearch" type="search" class="form-control" placeholder="Search users"
-                                aria-label="Search users">
+                                aria-label="Search pembayaran">
                         </div>
                         <!-- End Search -->
                     </form>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <button type="button" class="btn btn-primary d-flex align-items-center gap-2 add"
-                        data-bs-toggle="modal" data-bs-target="#add-modal">
+                    <a href="{{ route('pembayaran.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
                         <i class="bi bi-plus-circle"></i>
                         <span>Tambah Data</span>
-                    </button>
+                    </a>
                 </div>
             </div>
             <!-- End Header -->
@@ -85,15 +75,15 @@
                                 </div>
                             </th>
                             <th class="table-column-ps-0">Kode</th>
-                            <th>Nama</th>
-                            <th>No HP</th>
-                            <th>Alamat</th>
+                            <th>Kode Pesanan</th>
+                            <th>Tanggal</th>
+                            <th>Jumlah</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($pelanggans as $pelanggan)
+                        @foreach ($pembayarans as $pembayaran)
                             <tr>
                                 <td>
                                     <div class="form-check">
@@ -102,23 +92,18 @@
                                         <label class="form-check-label" for="datatableCheckAll1"></label>
                                     </div>
                                 </td>
-                                <td>{{ $pelanggan->kode }}</td>
-                                <td>{{ $pelanggan->nama }}</td>
-                                <td>{{ $pelanggan->no_hp }}</td>
-                                <td>{{ $pelanggan->alamat }}</td>
+                                <td>{{ $pembayaran->kode }}</td>
+                                <td>{{ $pembayaran->kode_pesanan }}</td>
+                                <td>{{ $pembayaran->tanggal }}</td>
+                                <td>{{ number_format($pembayaran->jumlah, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <button
-                                            class="btn btn-sm d-flex align-items-center gap-1 btn-info btn-active-light-primary edit"
-                                            data-kode="{{ $pelanggan->getKey() }}">
-                                            <div class="spinner-border text-light spinner-border-sm loading"
-                                                style="display: none;" role="status">
-                                                <span class="visually-hidden">Loading...</span>
-                                            </div>
-                                            <span>Edit</span>
-                                        </button>
+                                        <a href="{{ route('pembayaran.edit', $pembayaran->kode) }}"
+                                            class="btn btn-sm btn-info btn-active-light-primary">
+                                            Edit
+                                        </a>
                                         <button class="btn btn-sm btn-danger btn-active-light-danger ms-1 delete"
-                                            data-kode="{{ $pelanggan->getKey() }}">Delete</button>
+                                            data-kode="{{ $pembayaran->getKey() }}">Delete</button>
                                     </div>
                                 </td>
                             </tr>
@@ -172,56 +157,8 @@
             <!-- End Footer -->
         </div>
         <!-- End Card -->
-
     </div>
 @endsection
-
-@push('modal')
-    <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="add-modalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="add-modalLabel">Tambah Customer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-add-modal">
-                        <div class="mb-3">
-                            <label class="form-label" for="nama">Nama</label>
-                            <input type="text" id="nama" name="nama" class="form-control"
-                                placeholder="John Doe">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="no_hp">No HP</label>
-                            <input type="number" id="no_hp" name="no_hp" class="form-control"
-                                placeholder="John Doe">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="alamat">Alamat</label>
-                            <textarea name="alamat" id="alamat" class="form-control"></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white d-flex gap-2 align-items-center" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle-fill"></i>
-                        <span>Tutup</span>
-                    </button>
-                    <button type="button" data-pelanggan=""
-                        class="btn btn-primary d-flex gap-2 align-items-center simpan store-pelanggan">
-                        <i class="bi bi-clipboard-check-fill"></i>
-                        <span>Simpan</span>
-                        <div class="spinner-border text-light spinner-border-sm loading" style="display: none;"
-                            role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-@endpush
 
 @push('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -232,6 +169,8 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            HSCore.components.HSFlatpickr.init('.js-flatpickr');
+            HSCore.components.HSMask.init('.js-input-mask');
             HSCore.components.HSDatatables.init($('#datatable'), {
                 columnDefs: [{
                     targets: [0, 5],
@@ -266,143 +205,9 @@
                 </div>`,
                 }
             });
-
-            $('.add').click(function(e) {
-                e.preventDefault();
-                $('.form-add-modal input[name="nama"]').val('');
-                $('.form-add-modal input[name="no_hp"]').val('');
-                $('.form-add-modal textarea[name="alamat"]').val('');
-                $('#add-modal .simpan').data('pelanggan', '');
-                $('#add-modal .simpan').removeClass('update-pelanggan');
-                $('#add-modal .simpan').addClass('store-pelanggan');
-                $('#add-modal #add-modalLabel').text('Tambah Customer');
-            });
-
-            $('#add-modal').on('click', '.store-pelanggan', function(e) {
-                e.preventDefault();
-                var postData = new FormData($(".form-add-modal")[0]);
-                $('#add-modal .simpan .loading').show();
-                $.ajax({
-                    type: 'POST',
-                    url: "/pelanggan/store",
-                    processData: false,
-                    contentType: false,
-                    data: postData,
-                    success: function(response) {
-                        $('#add-modal .simpan .loading').hide();
-                        $('#add-modal').modal('hide');
-                        Swal.fire(
-                            'Success!',
-                            response.message,
-                            'success'
-                        ).then(function() {
-                            location.reload();
-                        });
-                    },
-                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
-                        $('#add-modal .simpan .loading').hide();
-                        if (jqXHR.status == 500) {
-                            Swal.fire(
-                                'Error!',
-                                'Something went wrong',
-                                'error'
-                            );
-                        }
-                        if (jqXHR.status == 422) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Peringatan!',
-                                text: JSON.parse(jqXHR.responseText).message,
-                            })
-                        }
-                    }
-                });
-            });
-
-            $('#datatable').on('click', '.edit', function(e) {
-                e.preventDefault();
-                var target = this;
-                var pelanggan = $(target).data('kode');
-                $($(target).find('.loading')).show();
-                $.ajax({
-                    type: "POST",
-                    url: `/pelanggan/${pelanggan}/edit`,
-                    dataType: "JSON",
-                    success: function(response) {
-                        $($(target).find('.loading')).hide();
-                        $('.form-add-modal input[name="nama"]').val(response.nama);
-                        $('.form-add-modal input[name="no_hp"]').val(response.no_hp);
-                        $('.form-add-modal textarea[name="alamat"]').val(response.alamat);
-                        $('#add-modal .simpan').data('pelanggan', response.key);
-                        $('#add-modal .simpan').addClass('update-pelanggan');
-                        $('#add-modal .simpan').removeClass('store-pelanggan');
-                        $('#add-modal #add-modalLabel').text('Ubah Customer');
-                        $('#add-modal').modal('show');
-                    },
-                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
-                        $($(target).find('.loading')).hide();
-                        if (jqXHR.status == 500) {
-                            Swal.fire(
-                                'Error!',
-                                'Something went wrong',
-                                'error'
-                            );
-                        }
-                        if (jqXHR.status == 404) {
-                            Swal.fire(
-                                'Warning!',
-                                'Not Found',
-                                'warning'
-                            );
-                        }
-                    }
-                });
-            });
-
-            $('#add-modal').on('click', '.update-pelanggan', function(e) {
-                e.preventDefault();
-                var postData = new FormData($(".form-add-modal")[0]);
-                $('#add-modal .simpan .loading').show();
-                var pelanggan = $(this).data('pelanggan');
-                $.ajax({
-                    type: 'POST',
-                    url: `/pelanggan/${pelanggan}/update`,
-                    processData: false,
-                    contentType: false,
-                    data: postData,
-                    success: function(response) {
-                        $('#add-modal .simpan .loading').hide();
-                        $('#add-modal').modal('hide');
-                        Swal.fire(
-                            'Success!',
-                            response.message,
-                            'success'
-                        ).then(function() {
-                            location.reload();
-                        });
-                    },
-                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
-                        $('#add-modal .simpan .loading').hide();
-                        if (jqXHR.status == 500) {
-                            Swal.fire(
-                                'Error!',
-                                'Something went wrong',
-                                'error'
-                            );
-                        }
-                        if (jqXHR.status == 422) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Peringatan!',
-                                text: JSON.parse(jqXHR.responseText).message,
-                            })
-                        }
-                    }
-                });
-            });
             $('#datatable').on('click', '.delete', function(e) {
                 e.preventDefault();
-                var pelanggan = $(this).data('kode');
+                var pembayaran = $(this).data('kode');
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -415,7 +220,7 @@
                         return new Promise(function(resolve) {
                             $.ajax({
                                     type: "DELETE",
-                                    url: `/pelanggan/${pelanggan}/destroy`,
+                                    url: `/pembayaran/${pembayaran}/destroy`,
                                     dataType: 'JSON',
                                 })
                                 .done(function(myAjaxJsonResponse) {
@@ -466,7 +271,7 @@
                         return new Promise(function(resolve) {
                             $.ajax({
                                     type: "DELETE",
-                                    url: `/pelanggan/destroys`,
+                                    url: `/pembayaran/destroys`,
                                     data: {
                                         kodes
                                     },

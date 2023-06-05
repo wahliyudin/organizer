@@ -24,7 +24,6 @@ class Pesanan extends Model
         'kode_pelanggan',
         'tanggal',
         'kode_akun',
-        'keterangan',
         'kode_jurnal',
     ];
 

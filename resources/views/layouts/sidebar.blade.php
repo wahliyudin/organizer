@@ -77,6 +77,14 @@
                             <span class="nav-link-title">Pesanan</span>
                         </a>
                     </div>
+
+                    <div class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}"
+                            href="{{ route('pembayaran.index') }}" data-placement="left">
+                            <i class="bi-kanban nav-icon"></i>
+                            <span class="nav-link-title">Pembayaran</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

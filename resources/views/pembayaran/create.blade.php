@@ -7,7 +7,7 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h1 class="page-header-title">Pesanan</h1>
+                <h1 class="page-header-title">Pembayaran</h1>
             </div>
         </div>
     </div>
@@ -18,152 +18,89 @@
         <!-- Card -->
         <div class="card">
             <div class="card-body">
-                <form class="form-add-modal">
-                    <div class="row justify-content-between">
-                        <div class="mb-3 col-md-4">
-                            <label class="form-label" for="kode">Kode Pesanan</label>
+                <form class="form-add-modal form-pembayaran">
+                    <input type="hidden" name="kode_jurnal">
+                    <div class="row">
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="kode">Kode Pembayaran</label>
                             <input type="text" readonly id="kode" name="kode" class="form-control"
                                 value="{{ $kode }}">
                         </div>
-                        <div class="mb-3 col-md-4">
+                        <div class="mb-3 col-md-3">
                             <label class="form-label" for="tanggal">Tanggal</label>
                             <input type="text" class="js-flatpickr form-control flatpickr-custom"
                                 placeholder="Select dates" name="tanggal" value="{{ now()->format('Y-m-d') }}"
                                 data-hs-flatpickr-options='{"dateFormat": "Y-m-d"}'>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 row">
-                            <div style="height: 0 !important;" class="col-md-12">
-                                <label class="form-label" for="tanggal">Kode Customer</label>
-                                <div class="tom-select-custom tom-select-custom-with-tags">
-                                    <select class="js-select form-select" name="kode_customer" autocomplete="off"
-                                        data-hs-tom-select-options='{
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="kode_pesanan">Kode Pesanan</label>
+                            <div class="tom-select-custom tom-select-custom-with-tags">
+                                <select class="js-select form-select" name="kode_pesanan" autocomplete="off"
+                                    data-hs-tom-select-options='{
+                                              "placeholder": "Select a pesanan..."
+                                            }'>
+                                    <option value="">Select a pesanan...</option>
+                                    @foreach ($pesanans as $pesanan)
+                                        <option value="{{ $pesanan->kode }}">{{ $pesanan->kode }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="kode_akun">Kode Akun</label>
+                            <div class="tom-select-custom tom-select-custom-with-tags">
+                                <select class="js-select form-select" name="kode_akun" autocomplete="off"
+                                    data-hs-tom-select-options='{
                                               "placeholder": "Select a customer..."
                                             }'>
-                                        <option value="">Select a customer...</option>
-                                        @foreach ($pelanggans as $pelanggan)
-                                            <option value="{{ $pelanggan->kode }}">{{ $pelanggan->kode }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label" for="nama_customer">Nama Customer</label>
-                                <input type="text" id="nama_customer" readonly name="nama_customer" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6 row">
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label" for="tanggal">Kode Paket</label>
-                                <div class="tom-select-custom tom-select-custom-with-tags">
-                                    <select class="js-select form-select" name="kode_paket" autocomplete="off"
-                                        data-hs-tom-select-options='{
-                                              "placeholder": "Select a paket..."
-                                            }'>
-                                        <option value="">Select a paket...</option>
-                                        @foreach ($dataAyams as $dataAyam)
-                                            <option value="{{ $dataAyam->kode }}">{{ $dataAyam->kode }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label" for="nama_paket">Nama Paket</label>
-                                <input type="text" id="nama_paket" readonly name="nama_paket" class="form-control">
-                            </div>
-                            <div class="mb-3 col-md-12">
-                                <label class="form-label" for="harga_paket">Harga Paket</label>
-                                <input type="text" id="harga_paket" readonly name="harga_paket" class="form-control">
+                                    <option value="">Select a customer...</option>
+                                    @foreach ($akuns as $akun)
+                                        <option value="{{ $akun->kode }}">{{ $akun->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="row">
-                        <div class="input-group my-3">
-                            <span class="input-group-text text-black">Down Payment</span>
-                            <input type="text" class="uang form-control" name="down_payment" id="basic-url">
+                    <div class="row">
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="total_pesanan">Total Pesanan</label>
+                            <input readonly class="form-control form-control-solid uang" name="total_pesanan"
+                                placeholder="Jumlah" id="total_pesanan" />
                         </div>
-                    </div> --}}
-                    <table id="detail-pesanan" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Akun</th>
-                                <th>Debet</th>
-                                <th>Kredit</th>
-                                <th>Hapus</th>
-                            </tr>
-                        </thead>
-                        <tbody data-repeater-list="detail_transaksi">
-                            <tr data-repeater-item>
-                                <td>
-                                    <div class="col-md-12 akun">
-                                        <div class="tom-select-custom tom-select-custom-with-tags">
-                                            <select class="form-select" name="kode_akun">
-                                                <option selected disabled value="">Pilih akun...</option>
-                                                @foreach ($akuns as $akun)
-                                                    <option value="{{ $akun->kode }}">{{ $akun->nama }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-solid uang debet" name="debet"
-                                            placeholder="Debet" id="debet" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-md-12">
-                                        <input class="form-control form-control-solid uang kredit" name="kredit"
-                                            placeholder="Kredit" id="kredit" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" data-repeater-delete class="btn btn-sm btn-light-danger">
-                                        <i class="ki-duotone ki-trash fs-5"><span class="path1"></span><span
-                                                class="path2"></span><span class="path3"></span><span
-                                                class="path4"></span><span class="path5"></span></i>
-                                        Hapus
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td>Total</td>
-                                <td>
-                                    <div class="col-md-12">
-                                        <input readonly class="form-control form-control-solid uang" name="total_debet"
-                                            id="total_debet" value="0" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="col-md-12">
-                                        <input readonly class="form-control form-control-solid uang" name="total_kredit"
-                                            id="total_kredit" value="0" />
-                                    </div>
-                                </td>
-                                <td>
-                                    <button type="button" data-repeater-create class="btn btn-light-primary">
-                                        <i class="ki-duotone ki-plus fs-3"></i>
-                                        Tambah
-                                    </button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="jumlah_bayar">Jumlah Bayar</label>
+                            <input class="form-control form-control-solid uang" name="jumlah_bayar"
+                                placeholder="Jumlah Bayar" id="jumlah_bayar" />
+                        </div>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="kurang_bayar">Kurang Bayar</label>
+                            <input readonly class="form-control form-control-solid uang" name="kurang_bayar"
+                                placeholder="Kurang Bayar" id="kurang_bayar" />
+                        </div>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="kembalian">Kembalian</label>
+                            <input readonly class="form-control form-control-solid uang" name="kembalian"
+                                placeholder="Kembalian" id="kembalian" />
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-success d-flex gap-2 align-items-center simpan">
+                            <i class="bi bi-clipboard-check-fill"></i>
+                            <span>Simpan</span>
+                            <div class="spinner-border text-light spinner-border-sm loading" style="display: none;"
+                                role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
-        <!-- End Card -->
     </div>
 @endsection
 
 @push('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/vendor/formrepeater/formrepeater.bundle.js') }}"></script>
     <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
     <script>
         $(document).on('ready', function() {
@@ -175,84 +112,68 @@
             $('.uang').mask('0.000.000.000', {
                 reverse: true
             });
-            $('#detail-pesanan').repeater({
-                initEmpty: false,
-
-                show: function() {
-                    $(this).slideDown();
-                    // HSCore.components.HSTomSelect.init('.js-select');
-                },
-
-                hide: function(deleteElement) {
-                    $(this).slideUp(deleteElement);
-                }
-            });
             HSCore.components.HSFlatpickr.init('.js-flatpickr');
             HSCore.components.HSTomSelect.init('.js-select');
             HSCore.components.HSMask.init('.js-input-mask');
 
-            $('select[name="kode_customer"]').change(function(e) {
+            $('.simpan').click(function(e) {
                 e.preventDefault();
-                var kode_customer = $(this).val();
-                if (!kode_customer) {
-                    return;
-                }
+                var postData = new FormData($(".form-pembayaran")[0]);
+                $('.simpan .loading').show();
                 $.ajax({
-                    type: "POST",
-                    url: `/pesanan/${kode_customer}/customer`,
-                    dataType: "JSON",
+                    type: 'POST',
+                    url: `/pembayaran/store`,
+                    processData: false,
+                    contentType: false,
+                    data: postData,
                     success: function(response) {
-                        $('input[name="nama_customer"]').val(response.nama);
-                    },
-                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
-                        if (jqXHR.status == 422) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Peringatan!',
-                                text: JSON.parse(jqXHR.responseText).message,
-                            })
-                        } else {
-                            Swal.fire(
-                                'Error!',
-                                'Something went wrong',
-                                'error'
-                            );
-                        }
+                        $('.simpan .loading').hide();
+                        Swal.fire(
+                            'Created!',
+                            response.message,
+                            'success'
+                        ).then(function() {
+                            location.reload();
+                        });
                     }
                 });
             });
 
-            $('select[name="kode_paket"]').change(function(e) {
+            $('select[name="kode_pesanan"]').change(function(e) {
                 e.preventDefault();
-                var kode_paket = $(this).val();
-                if (!kode_paket) {
-                    return;
-                }
+                var pesanan = $(this).val();
                 $.ajax({
                     type: "POST",
-                    url: `/pesanan/${kode_paket}/paket`,
+                    url: `/pembayaran/${pesanan}/pesanan`,
                     dataType: "JSON",
                     success: function(response) {
-                        $('input[name="nama_paket"]').val(response.nama);
-                        $('input[name="harga_paket"]').val(response.harga);
-                    },
-                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
-                        if (jqXHR.status == 422) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Peringatan!',
-                                text: JSON.parse(jqXHR.responseText).message,
-                            })
-                        } else {
-                            Swal.fire(
-                                'Error!',
-                                'Something went wrong',
-                                'error'
-                            );
-                        }
+                        $('input[name="kode_jurnal"]').val(response.kode_jurnal);
+                        $('input[name="total_pesanan"]').val(response.total_pesanan).trigger(
+                            'input');
                     }
                 });
             });
+
+            $('input[name="jumlah_bayar"]').keyup(function(e) {
+                e.preventDefault();
+                var value = numberFromString($(this).val());
+                var totalPesanan = numberFromString($('input[name="total_pesanan"]').val());
+                var result = value - totalPesanan;
+                if (result < 0) {
+                    $('input[name="kurang_bayar"]').val(Math.abs(result)).trigger('input');
+                    result = 0;
+                } else {
+                    $('input[name="kurang_bayar"]').val(0).trigger('input');
+                }
+                $('input[name="kembalian"]').val(result).trigger('input');
+            });
+
+            function numberFromString(s) {
+                return typeof s === 'string' ?
+                    s.replace(/[\$.]/g, '') * 1 :
+                    typeof s === 'number' ?
+                    s : 0;
+            }
         });
     </script>
 @endpush

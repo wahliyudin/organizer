@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('kode_pesanan');
             $table->date('tanggal');
             $table->bigInteger('jumlah');
+            $table->string('kode_akun');
             $table->string('kode_jurnal');
             $table->timestamps();
+
+            $table->foreign('kode_jurnal')->references('kode')->on('jurnal')->cascadeOnDelete();
         });
     }
 

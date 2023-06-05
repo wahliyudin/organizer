@@ -15,7 +15,6 @@ return new class extends Migration
             $table->string('kode')->primary();
             $table->string('kode_pelanggan');
             $table->string('kode_akun');
-            $table->string('keterangan');
             $table->date('tanggal');
             $table->string('kode_jurnal');
             $table->timestamps();

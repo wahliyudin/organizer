@@ -71,7 +71,6 @@ class PesananController extends Controller
         try {
             $jurnal = Jurnal::query()->create([
                 'tanggal' => $request->tanggal,
-                'keterangan' => $request->keterangan,
             ]);
             $jurnal->jurnalDetails()->create([
                 'kode_akun' => $request->kode_akun,
@@ -113,7 +112,6 @@ class PesananController extends Controller
             $jurnal = Jurnal::query()->where('kode', $pesanan->kode_jurnal)->first();
             $jurnal?->update([
                 'tanggal' => $request->tanggal,
-                'keterangan' => $request->keterangan,
             ]);
             $jurnal->jurnalDetails()->delete();
             $jurnal->jurnalDetails()->create([

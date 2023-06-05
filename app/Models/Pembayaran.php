@@ -15,7 +15,7 @@ class Pembayaran extends Model
 
     protected $primaryKey = "kode";
 
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $keyType = 'string';
 
@@ -24,6 +24,7 @@ class Pembayaran extends Model
         'kode_pesanan',
         'tanggal',
         'jumlah',
+        'kode_akun',
         'kode_jurnal',
     ];
 
@@ -40,5 +41,15 @@ class Pembayaran extends Model
         self::creating(function ($model) {
             $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
         });
+    }
+
+    public function pesanan()
+    {
+        return $this->belongsTo(Pesanan::class, 'kode_pesanan', 'kode');
+    }
+
+    public function jurnal()
+    {
+        return $this->belongsTo(Jurnal::class, 'kode_jurnal', 'kode');
     }
 }
