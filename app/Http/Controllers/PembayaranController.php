@@ -67,16 +67,30 @@ class PembayaranController extends Controller
     public function edit(Pembayaran $pembayaran)
     {
         try {
+            $pembayaran->load('pesanan.pesananDetails.dataAyam');
+            $totalPesanan = 0;
+            foreach ($pembayaran->pesanan->pesananDetails as $pesananDetail) {
+                $totalPesanan += ($pesananDetail->dataAyam?->harga * $pesananDetail->kuantitas);
+            }
+            $result = $pembayaran->jumlah - $totalPesanan;
+            if ($result < 0) {
+                $kurangBayar = abs($result);
+                $kembalian = 0;
+            } else {
+                $kurangBayar = 0;
+                $kembalian = $result;
+            }
+
             $pesanans = Pesanan::query()->get();
             $akuns = Akun::query()->get();
             $pembayaran->load('pesanan');
-            return view('pembayaran.edit', compact('pesanan', 'pesanans', 'akuns'));
+            return view('pembayaran.edit', compact('pembayaran', 'totalPesanan', 'kurangBayar', 'kembalian', 'pesanans', 'akuns'));
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public function update(Request $request, Pesanan $pembayaran)
+    public function update(Request $request, Pembayaran $pembayaran)
     {
         try {
             $jurnal = Jurnal::query()->where('kode', $pembayaran->kode_jurnal)->first();
@@ -85,12 +99,12 @@ class PembayaranController extends Controller
                 ->where('debet', $pembayaran->jumlah)
                 ->first()?->update([
                     'kode_akun' => $request->kode_akun,
-                    'debet' => str($request->jumlah)->replace('.', ''),
+                    'debet' => str($request->jumlah_bayar)->replace('.', ''),
                 ]);
             $pembayaran->update([
                 'kode_pesanan' => $request->kode_pesanan,
                 'tanggal' => $request->tanggal,
-                'jumlah' => str($request->jumlah)->replace('.', ''),
+                'jumlah' => str($request->jumlah_bayar)->replace('.', ''),
                 'kode_akun' => $request->kode_akun,
                 'kode_jurnal' => $jurnal->kode,
             ]);
