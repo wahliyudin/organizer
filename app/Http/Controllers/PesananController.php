@@ -74,6 +74,7 @@ class PesananController extends Controller
             ]);
             $jurnal->jurnalDetails()->create([
                 'kode_akun' => $request->kode_akun,
+                'tanggal' => $request->tanggal,
                 'kredit' => str($request->total)->replace('.', '')->value(),
             ]);
             $pesanan = Pesanan::query()->create([
@@ -116,6 +117,7 @@ class PesananController extends Controller
             $jurnal->jurnalDetails()->delete();
             $jurnal->jurnalDetails()->create([
                 'kode_akun' => $request->kode_akun,
+                'tanggal' => $request->tanggal,
                 'kredit' => str($request->total)->replace('.', '')->value(),
             ]);
             $pesanan->update([

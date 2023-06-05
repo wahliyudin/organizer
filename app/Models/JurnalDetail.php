@@ -13,8 +13,14 @@ class JurnalDetail extends Model
 
     protected $fillable = [
         'kode_jurnal',
+        'tanggal',
         'kode_akun',
         'debet',
         'kredit',
     ];
+
+    public function akun()
+    {
+        return $this->belongsTo(Akun::class, 'kode_akun', 'kode');
+    }
 }

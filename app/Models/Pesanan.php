@@ -56,4 +56,9 @@ class Pesanan extends Model
     {
         return $this->belongsTo(Jurnal::class, 'kode_jurnal', 'kode');
     }
+
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class, 'kode_pesanan', 'kode');
+    }
 }

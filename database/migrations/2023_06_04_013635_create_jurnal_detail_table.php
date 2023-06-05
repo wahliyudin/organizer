@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('jurnal_detail', function (Blueprint $table) {
             $table->id();
             $table->string('kode_jurnal');
+            $table->date('tanggal');
             $table->string('kode_akun');
             $table->bigInteger('debet')->default(0);
             $table->bigInteger('kredit')->default(0);

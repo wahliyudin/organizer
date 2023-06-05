@@ -20,10 +20,12 @@ class PembayaranController extends Controller
     public function pesanan(Pesanan $pesanan)
     {
         try {
+            $pesanan->loadSum('pembayarans', 'jumlah');
             $total = 0;
             foreach ($pesanan->pesananDetails as $pesananDetail) {
                 $total += ($pesananDetail->dataAyam?->harga * $pesananDetail->kuantitas);
             }
+            $total -= $pesanan->pembayarans_sum_jumlah;
             return response()->json([
                 'kode_jurnal' => $pesanan->kode_jurnal,
                 'total_pesanan' => $total,
@@ -44,15 +46,20 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         try {
+            $jumlahBayar = $request->jumlah_bayar;
+            if ($request->kembalian) {
+                $jumlahBayar = $request->total_pesanan;
+            }
             $jurnal = Jurnal::query()->where('kode', $request->kode_jurnal)->first();
             $jurnal->jurnalDetails()->create([
+                'tanggal' => $request->tanggal,
                 'kode_akun' => $request->kode_akun,
-                'debet' => str($request->jumlah_bayar)->replace('.', ''),
+                'debet' => str($jumlahBayar)->replace('.', ''),
             ]);
             Pembayaran::query()->create([
                 'kode_pesanan' => $request->kode_pesanan,
                 'tanggal' => $request->tanggal,
-                'jumlah' => str($request->jumlah_bayar)->replace('.', ''),
+                'jumlah' => str($jumlahBayar)->replace('.', ''),
                 'kode_akun' => $request->kode_akun,
                 'kode_jurnal' => $jurnal->kode,
             ]);
@@ -99,6 +106,7 @@ class PembayaranController extends Controller
                 ->where('debet', $pembayaran->jumlah)
                 ->first()?->update([
                     'kode_akun' => $request->kode_akun,
+                    'tanggal' => $request->tanggal,
                     'debet' => str($request->jumlah_bayar)->replace('.', ''),
                 ]);
             $pembayaran->update([

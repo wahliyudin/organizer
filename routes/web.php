@@ -4,6 +4,7 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\JenisAkunController;
 use App\Http\Controllers\DataAyamController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
@@ -84,4 +85,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pembayaran/{pembayaran:kode}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
     Route::post('pembayaran/{pembayaran:kode}/update', [PembayaranController::class, 'update'])->name('pembayaran.update');
     Route::delete('pembayaran/{pembayaran}/destroy', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+
+    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::post('laporan/jurnal', [LaporanController::class, 'jurnal'])->name('laporan.jurnal');
 });
