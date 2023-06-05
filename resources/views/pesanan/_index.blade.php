@@ -46,17 +46,18 @@
                                 <i class="bi-search"></i>
                             </div>
                             <input id="datatableSearch" type="search" class="form-control" placeholder="Search users"
-                                aria-label="Search pesanan">
+                                aria-label="Search users">
                         </div>
                         <!-- End Search -->
                     </form>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <a href="{{ route('pesanan.create') }}" class="btn btn-primary d-flex align-items-center gap-2">
+                    <button type="button" class="btn btn-primary d-flex align-items-center gap-2 add"
+                        data-bs-toggle="modal" data-bs-target="#add-modal">
                         <i class="bi bi-plus-circle"></i>
                         <span>Tambah Data</span>
-                    </a>
+                    </button>
                 </div>
             </div>
             <!-- End Header -->
@@ -76,8 +77,8 @@
                             </th>
                             <th class="table-column-ps-0">Kode</th>
                             <th>Tanggal</th>
-                            <th>Pelanggan</th>
-                            <th>Kode Jurnal</th>
+                            <th>Customer</th>
+                            <th>Down Payment</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -94,8 +95,8 @@
                                 </td>
                                 <td>{{ $pesanan->kode }}</td>
                                 <td>{{ $pesanan->tanggal }}</td>
-                                <td>{{ $pesanan->pelanggan?->nama }}</td>
-                                <td>{{ $pesanan->kode_jurnal }}</td>
+                                <td>{{ $pesanan->customer?->nama }}</td>
+                                <td>{{ number_format($pesanan->down_payment, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <button
@@ -168,7 +169,7 @@
 @push('modal')
     <div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="add-modalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="add-modalLabel">Tambah Pesanan</h5>
@@ -178,9 +179,9 @@
                     <form class="form-add-modal">
                         <div class="row justify-content-between">
                             <div class="mb-3 col-md-4">
-                                <label class="form-label" for="kode">Kode Pesanan</label>
+                                <label class="form-label" for="kode">Kode PO</label>
                                 <input type="text" readonly id="kode" name="kode" class="form-control"
-                                    value="{{ $kode }}">
+                                    value="{{ $kode_po }}">
                             </div>
                             <div class="mb-3 col-md-4">
                                 <label class="form-label" for="tanggal">Tanggal</label>
@@ -199,8 +200,8 @@
                                                   "placeholder": "Select a customer..."
                                                 }'>
                                             <option value="">Select a customer...</option>
-                                            @foreach ($pelanggans as $pelanggan)
-                                                <option value="{{ $pelanggan->kode }}">{{ $pelanggan->kode }}</option>
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->kode }}">{{ $customer->kode }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -220,8 +221,8 @@
                                                   "placeholder": "Select a paket..."
                                                 }'>
                                             <option value="">Select a paket...</option>
-                                            @foreach ($dataAyams as $dataAyam)
-                                                <option value="{{ $dataAyam->kode }}">{{ $dataAyam->kode }}</option>
+                                            @foreach ($pakets as $paket)
+                                                <option value="{{ $paket->kode }}">{{ $paket->kode }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -238,85 +239,12 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="row">
+                        <div class="row">
                             <div class="input-group my-3">
                                 <span class="input-group-text text-black">Down Payment</span>
                                 <input type="text" class="uang form-control" name="down_payment" id="basic-url">
                             </div>
-                        </div> --}}
-                        <table id="detail-pesanan" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Akun</th>
-                                    <th>Debet</th>
-                                    <th>Kredit</th>
-                                    <th>Hapus</th>
-                                </tr>
-                            </thead>
-                            <tbody data-repeater-list="detail_transaksi">
-                                <tr data-repeater-item>
-                                    <td>
-                                        <div class="col-md-12 akun">
-                                            <div class="tom-select-custom tom-select-custom-with-tags">
-                                                <select class="js-select form-select" name="kode_akun" autocomplete="off"
-                                                    data-hs-tom-select-options='{
-                                                          "placeholder": "Pilih akun..."
-                                                        }'>
-                                                    <option value="">Pilih akun...</option>
-                                                    @foreach ($akuns as $akun)
-                                                        <option value="{{ $akun->kode }}">{{ $akun->nama }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-solid uang debet" name="debet"
-                                                placeholder="Debet" id="debet" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-12">
-                                            <input class="form-control form-control-solid uang kredit" name="kredit"
-                                                placeholder="Kredit" id="kredit" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="button" data-repeater-delete class="btn btn-sm btn-light-danger">
-                                            <i class="ki-duotone ki-trash fs-5"><span class="path1"></span><span
-                                                    class="path2"></span><span class="path3"></span><span
-                                                    class="path4"></span><span class="path5"></span></i>
-                                            Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td>Total</td>
-                                    <td>
-                                        <div class="col-md-12">
-                                            <input readonly class="form-control form-control-solid uang"
-                                                name="total_debet" id="total_debet" value="0" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="col-md-12">
-                                            <input readonly class="form-control form-control-solid uang"
-                                                name="total_kredit" id="total_kredit" value="0" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="button" data-repeater-create class="btn btn-light-primary">
-                                            <i class="ki-duotone ki-plus fs-3"></i>
-                                            Tambah
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -341,7 +269,6 @@
 
 @push('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('assets/vendor/formrepeater/formrepeater.bundle.js') }}"></script>
     <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
     <script>
         $(document).on('ready', function() {
@@ -353,20 +280,8 @@
             $('.uang').mask('0.000.000.000', {
                 reverse: true
             });
-            $('#detail-pesanan').repeater({
-                initEmpty: false,
-
-                show: function() {
-                    $(this).slideDown();
-                    // HSCore.components.HSTomSelect.init('.js-select');
-                },
-
-                hide: function(deleteElement) {
-                    $(this).slideUp(deleteElement);
-                }
-            });
             HSCore.components.HSFlatpickr.init('.js-flatpickr');
-            // HSCore.components.HSTomSelect.init('.js-select');
+            HSCore.components.HSTomSelect.init('.js-select');
             HSCore.components.HSMask.init('.js-input-mask');
             HSCore.components.HSDatatables.init($('#datatable'), {
                 columnDefs: [{

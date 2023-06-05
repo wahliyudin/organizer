@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akun;
 use App\Models\Pelanggan;
 use App\Models\DataAyam;
+use App\Models\Jurnal;
 use App\Models\Pesanan;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
@@ -12,30 +14,31 @@ class PesananController extends Controller
 {
     public function index()
     {
-        $customers = Pelanggan::query()->get();
-        $pakets = DataAyam::query()->get();
+        $pelanggans = Pelanggan::query()->get();
+        $dataAyams = DataAyam::query()->get();
         $pesanans = Pesanan::query()->get();
-        $kode_po = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
-        return view('pesanan.index', compact('pesanans', 'customers', 'pakets', 'kode_po'));
+        $akuns = Akun::query()->get();
+        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
+        return view('pesanan.index', compact('pesanans', 'akuns', 'pelanggans', 'dataAyams', 'kode'));
     }
 
-    public function customer(Pelanggan $customer)
+    public function pelanggan(Pelanggan $pelanggan)
     {
         try {
             return response()->json([
-                'nama' => $customer->nama
+                'nama' => $pelanggan->nama
             ]);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public function paket(DataAyam $dataAyam)
+    public function dataAyam(DataAyam $dataAyam)
     {
         try {
             return response()->json([
                 'nama' => $dataAyam->nama,
-                'harga' => number_format($dataAyam->harga, 0, ',', '.')
+                'harga' => $dataAyam->harga
             ]);
         } catch (\Throwable $th) {
             throw $th;
@@ -54,16 +57,33 @@ class PesananController extends Controller
         }
     }
 
+    public function create()
+    {
+        $pelanggans = Pelanggan::query()->get();
+        $dataAyams = DataAyam::query()->get();
+        $akuns = Akun::query()->get();
+        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
+        return view('pesanan.create', compact('pelanggans', 'dataAyams', 'akuns', 'kode'));
+    }
+
     public function store(Request $request)
     {
         try {
-            Pesanan::query()->create([
-                'kode' => $request->kode,
+            $jurnal = Jurnal::query()->create([
                 'tanggal' => $request->tanggal,
-                'kode_customer' => $request->kode_customer,
-                'kode_perkilo' => $request->kode_paket,
-                'down_payment' => str($request->down_payment)->replace('.', ''),
+                'keterangan' => $request->keterangan,
             ]);
+            $jurnal->jurnalDetails()->create([
+                'kode_akun' => $request->kode_akun,
+                'kredit' => str($request->total)->replace('.', '')->value(),
+            ]);
+            $pesanan = Pesanan::query()->create([
+                'kode' => $request->kode,
+                'kode_pelanggan' => $request->kode_pelanggan,
+                'tanggal' => $request->tanggal,
+                'kode_jurnal' => $jurnal->kode,
+            ]);
+            $pesanan->pesananDetails()->createMany($request->detail_transaksi);
             return response()->json([
                 'message' => 'Successfully'
             ]);
@@ -75,12 +95,12 @@ class PesananController extends Controller
     public function edit(Pesanan $pesanan)
     {
         try {
-            $pesanan->load(['customer', 'perkilo']);
+            $pesanan->load(['pelanggan', 'perkilo']);
             return response()->json([
                 'kode' => $pesanan->kode,
                 'tanggal' => $pesanan->tanggal,
-                'kode_customer' => $pesanan->kode_customer,
-                'nama_customer' => $pesanan->customer?->nama,
+                'kode_pelanggan' => $pesanan->kode_pelanggan,
+                'nama_pelanggan' => $pesanan->pelanggan?->nama,
                 'kode_paket' => $pesanan->kode_perkilo,
                 'nama_paket' => $pesanan->perkilo?->nama,
                 'harga_paket' => number_format($pesanan->perkilo?->harga, 0, ',', '.'),
@@ -97,7 +117,7 @@ class PesananController extends Controller
             $pesanan->update([
                 'kode' => $request->kode,
                 'tanggal' => $request->tanggal,
-                'kode_customer' => $request->kode_customer,
+                'kode_pelanggan' => $request->kode_pelanggan,
                 'kode_perkilo' => $request->kode_paket,
                 'down_payment' => str($request->down_payment)->replace('.', ''),
             ]);

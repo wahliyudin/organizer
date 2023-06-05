@@ -68,8 +68,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('akun.destroys');
 
     Route::get('pesanan', [PesananController::class, 'index'])->name('pesanan.index');
-    Route::post('pesanan/{pelanggan}/pelanggan', [PesananController::class, 'pelanggan'])->name('pesanan.pelanggan');
-    Route::post('pesanan/{perkilo}/paket', [PesananController::class, 'paket'])->name('pesanan.paket');
+    Route::post('pesanan/{pelanggan:kode}/pelanggan', [PesananController::class, 'pelanggan'])->name('pesanan.pelanggan');
+    Route::post('pesanan/{dataAyam:kode}/data-ayam', [PesananController::class, 'dataAyam'])->name('pesanan.data-ayam');
+    Route::get('pesanan/create', [PesananController::class, 'create'])->name('pesanan.create');
     Route::post('pesanan/store', [PesananController::class, 'store'])->name('pesanan.store');
     Route::post('pesanan/{pesanan}/edit', [PesananController::class, 'edit'])->name('pesanan.edit');
     Route::post('pesanan/{pesanan:kode}/update', [PesananController::class, 'update'])->name('pesanan.update');

@@ -21,7 +21,7 @@ class Pesanan extends Model
 
     protected $fillable = [
         'kode',
-        'kode_customer',
+        'kode_pelanggan',
         'tanggal',
         'kode_jurnal',
     ];
@@ -33,11 +33,21 @@ class Pesanan extends Model
         );
     }
 
-    public static function boot()
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
+    //     });
+    // }
+
+    public function pelanggan()
     {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
-        });
+        return $this->belongsTo(Pelanggan::class, 'kode_pelanggan', 'kode');
+    }
+
+    public function pesananDetails()
+    {
+        return $this->hasMany(PesananDetail::class, 'kode_pesanan', 'kode');
     }
 }

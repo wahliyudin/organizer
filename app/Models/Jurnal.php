@@ -15,7 +15,7 @@ class Jurnal extends Model
 
     protected $primaryKey = "kode";
 
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $keyType = 'string';
 
@@ -38,5 +38,10 @@ class Jurnal extends Model
         self::creating(function ($model) {
             $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
         });
+    }
+
+    public function jurnalDetails()
+    {
+        return $this->hasMany(JurnalDetail::class, 'kode_jurnal', 'kode');
     }
 }

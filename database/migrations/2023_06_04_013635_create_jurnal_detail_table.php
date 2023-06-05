@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_jurnal');
             $table->string('kode_akun');
-            $table->bigInteger('debet');
-            $table->bigInteger('kredit');
+            $table->bigInteger('debet')->default(0);
+            $table->bigInteger('kredit')->default(0);
             $table->timestamps();
 
             $table->foreign('kode_jurnal')->references('kode')->on('jurnal')->cascadeOnDelete();

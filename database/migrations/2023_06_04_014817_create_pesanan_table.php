@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pesanan', function (Blueprint $table) {
             $table->string('kode')->primary();
-            $table->string('kode_customer');
+            $table->string('kode_pelanggan');
             $table->date('tanggal');
             $table->string('kode_jurnal');
             $table->timestamps();
