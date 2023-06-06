@@ -227,6 +227,22 @@
                         var tr = $(target).parent().parent().parent().parent();
                         $($(tr).find('.harga')).val(response.harga).trigger('input');
                         total();
+                    },
+                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
+                        if (jqXHR.status == 500) {
+                            Swal.fire(
+                                'Error!',
+                                'Something went wrong',
+                                'error'
+                            );
+                        }
+                        if (jqXHR.status == 422) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan!',
+                                text: JSON.parse(jqXHR.responseText).message,
+                            })
+                        }
                     }
                 });
             });
@@ -259,6 +275,23 @@
                         ).then(function() {
                             location.reload();
                         });
+                    },
+                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
+                        $('.simpan .loading').hide();
+                        if (jqXHR.status == 500) {
+                            Swal.fire(
+                                'Error!',
+                                'Something went wrong',
+                                'error'
+                            );
+                        }
+                        if (jqXHR.status == 422) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan!',
+                                text: JSON.parse(jqXHR.responseText).message,
+                            })
+                        }
                     }
                 });
             });

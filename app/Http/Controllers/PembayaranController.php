@@ -46,6 +46,11 @@ class PembayaranController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'jumlah_bayar' => 'required',
+                'tanggal' => 'required',
+                'kode_akun' => 'required',
+            ]);
             $jumlahBayar = $request->jumlah_bayar;
             if ($request->kembalian) {
                 $jumlahBayar = $request->total_pesanan;
@@ -100,6 +105,15 @@ class PembayaranController extends Controller
     public function update(Request $request, Pembayaran $pembayaran)
     {
         try {
+            $request->validate([
+                'jumlah_bayar' => 'required',
+                'tanggal' => 'required',
+                'kode_akun' => 'required',
+            ]);
+            $jumlahBayar = $request->jumlah_bayar;
+            if ($request->kembalian) {
+                $jumlahBayar = $request->total_pesanan;
+            }
             $jurnal = Jurnal::query()->where('kode', $pembayaran->kode_jurnal)->first();
             $jurnal->jurnalDetails()
                 ->where('kode_akun', $pembayaran->kode_akun)
@@ -107,12 +121,12 @@ class PembayaranController extends Controller
                 ->first()?->update([
                     'kode_akun' => $request->kode_akun,
                     'tanggal' => $request->tanggal,
-                    'debet' => str($request->jumlah_bayar)->replace('.', ''),
+                    'debet' => str($jumlahBayar)->replace('.', ''),
                 ]);
             $pembayaran->update([
                 'kode_pesanan' => $request->kode_pesanan,
                 'tanggal' => $request->tanggal,
-                'jumlah' => str($request->jumlah_bayar)->replace('.', ''),
+                'jumlah' => str($jumlahBayar)->replace('.', ''),
                 'kode_akun' => $request->kode_akun,
                 'kode_jurnal' => $jurnal->kode,
             ]);

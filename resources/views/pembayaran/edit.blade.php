@@ -141,6 +141,23 @@
                         ).then(function() {
                             location.reload();
                         });
+                    },
+                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
+                        $('.simpan .loading').hide();
+                        if (jqXHR.status == 500) {
+                            Swal.fire(
+                                'Error!',
+                                'Something went wrong',
+                                'error'
+                            );
+                        }
+                        if (jqXHR.status == 422) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan!',
+                                text: JSON.parse(jqXHR.responseText).message,
+                            })
+                        }
                     }
                 });
             });
@@ -156,6 +173,22 @@
                         $('input[name="kode_jurnal"]').val(response.kode_jurnal);
                         $('input[name="total_pesanan"]').val(response.total_pesanan).trigger(
                             'input');
+                    },
+                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
+                        if (jqXHR.status == 500) {
+                            Swal.fire(
+                                'Error!',
+                                'Something went wrong',
+                                'error'
+                            );
+                        }
+                        if (jqXHR.status == 422) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan!',
+                                text: JSON.parse(jqXHR.responseText).message,
+                            })
+                        }
                     }
                 });
             });
