@@ -85,6 +85,13 @@
                             <span class="nav-link-title">Pembayaran</span>
                         </a>
                     </div>
+                    <div class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}"
+                            href="{{ route('laporan.index') }}" data-placement="left">
+                            <i class="bi bi-file-earmark-bar-graph-fill nav-icon"></i>
+                            <span class="nav-link-title">Laporan</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
