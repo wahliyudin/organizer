@@ -3,6 +3,8 @@
 @push('css')
 @endpush
 
+@section('title', 'Jenis Akun')
+
 @section('header')
     <div class="page-header">
         <div class="row align-items-center">

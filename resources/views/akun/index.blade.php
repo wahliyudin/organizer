@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="./node_modules/tom-select/dist/css/tom-select.bootstrap5.css">
 @endpush
 
+@section('title', 'Data Akun')
+
 @section('header')
     <div class="page-header">
         <div class="row align-items-center">
