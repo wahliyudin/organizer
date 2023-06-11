@@ -74,7 +74,7 @@
                         <div class="nav-item">
                             <a class="nav-link {{ request()->routeIs('pengguna.index') ? 'active' : '' }}"
                                 href="{{ route('pengguna.index') }}" data-placement="left">
-                                <i class="bi bi-coin nav-icon"></i>
+                                <i class="bi bi-people-fill nav-icon"></i>
                                 <span class="nav-link-title">Pengguna</span>
                             </a>
                         </div>

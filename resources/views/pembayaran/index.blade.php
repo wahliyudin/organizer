@@ -80,7 +80,7 @@
                             <th>Kode Pesanan</th>
                             <th>Tanggal</th>
                             <th>Jumlah</th>
-                            <th>Actions</th>
+                            {{-- <th>Actions</th> --}}
                         </tr>
                     </thead>
 
@@ -98,7 +98,7 @@
                                 <td>{{ $pembayaran->kode_pesanan }}</td>
                                 <td>{{ $pembayaran->tanggal }}</td>
                                 <td>{{ number_format($pembayaran->jumlah, 0, ',', '.') }}</td>
-                                <td>
+                                {{-- <td>
                                     <div class="d-flex align-items-center">
                                         <a href="{{ route('pembayaran.edit', $pembayaran->kode) }}"
                                             class="btn btn-sm btn-info btn-active-light-primary">
@@ -107,7 +107,7 @@
                                         <button class="btn btn-sm btn-danger btn-active-light-danger ms-1 delete"
                                             data-kode="{{ $pembayaran->getKey() }}">Delete</button>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
