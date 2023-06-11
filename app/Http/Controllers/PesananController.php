@@ -62,7 +62,7 @@ class PesananController extends Controller
         $pelanggans = Pelanggan::query()->get();
         $dataAyams = DataAyam::query()->get();
         $akuns = Akun::query()->get();
-        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
+        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 12, 'prefix' => 'PO' . now()->format('ymd') . '-']);
         return view('pesanan.create', compact('pelanggans', 'dataAyams', 'akuns', 'kode'));
     }
 

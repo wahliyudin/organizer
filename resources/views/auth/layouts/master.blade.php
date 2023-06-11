@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Basic Log In | Front - Admin &amp; Dashboard Template</title>
-    <link rel="shortcut icon" href="favicon.ico">
+    <title>{{ env('APP_NAME') }}</title>
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/vendor.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/theme.minc619.css?v=1.0') }}">

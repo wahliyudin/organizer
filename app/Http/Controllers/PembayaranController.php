@@ -39,7 +39,7 @@ class PembayaranController extends Controller
     {
         $pesanans = Pesanan::query()->get();
         $akuns = Akun::query()->get();
-        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
+        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 12, 'prefix' => 'PO' . now()->format('ymd') . '-']);
         return view('pembayaran.create', compact('pesanans', 'akuns', 'kode'));
     }
 

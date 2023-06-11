@@ -30,68 +30,73 @@
                         </a>
                     </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('pelanggan.index') ? 'active' : '' }}"
-                            href="{{ route('pelanggan.index') }}" data-placement="left">
-                            <i class="bi bi-people nav-icon"></i>
-                            <span class="nav-link-title">Pelanggan</span>
-                        </a>
-                    </div>
+                    @role('admin')
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pelanggan.index') ? 'active' : '' }}"
+                                href="{{ route('pelanggan.index') }}" data-placement="left">
+                                <i class="bi bi-people nav-icon"></i>
+                                <span class="nav-link-title">Pelanggan</span>
+                            </a>
+                        </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('data-ayam.index') ? 'active' : '' }}"
-                            href="{{ route('data-ayam.index') }}" data-placement="left">
-                            <i class="bi bi-box-fill nav-icon"></i>
-                            <span class="nav-link-title">Data Ayam</span>
-                        </a>
-                    </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('data-ayam.index') ? 'active' : '' }}"
+                                href="{{ route('data-ayam.index') }}" data-placement="left">
+                                <i class="bi bi-box-fill nav-icon"></i>
+                                <span class="nav-link-title">Data Ayam</span>
+                            </a>
+                        </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('stok.index') ? 'active' : '' }}"
-                            href="{{ route('stok.index') }}" data-placement="left">
-                            <i class="bi bi-boxes nav-icon"></i>
-                            <span class="nav-link-title">Stok</span>
-                        </a>
-                    </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('stok.index') ? 'active' : '' }}"
+                                href="{{ route('stok.index') }}" data-placement="left">
+                                <i class="bi bi-boxes nav-icon"></i>
+                                <span class="nav-link-title">Stok</span>
+                            </a>
+                        </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('jenis-akun.index') ? 'active' : '' }}"
-                            href="{{ route('jenis-akun.index') }}" data-placement="left">
-                            <i class="bi bi-currency-exchange nav-icon"></i>
-                            <span class="nav-link-title">Jenis Akun</span>
-                        </a>
-                    </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('jenis-akun.index') ? 'active' : '' }}"
+                                href="{{ route('jenis-akun.index') }}" data-placement="left">
+                                <i class="bi bi-currency-exchange nav-icon"></i>
+                                <span class="nav-link-title">Jenis Akun</span>
+                            </a>
+                        </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('akun.index') ? 'active' : '' }}"
-                            href="{{ route('akun.index') }}" data-placement="left">
-                            <i class="bi bi-coin nav-icon"></i>
-                            <span class="nav-link-title">Akun</span>
-                        </a>
-                    </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('akun.index') ? 'active' : '' }}"
+                                href="{{ route('akun.index') }}" data-placement="left">
+                                <i class="bi bi-coin nav-icon"></i>
+                                <span class="nav-link-title">Akun</span>
+                            </a>
+                        </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('pesanan.index') ? 'active' : '' }}"
-                            href="{{ route('pesanan.index') }}" data-placement="left">
-                            <i class="bi-kanban nav-icon"></i>
-                            <span class="nav-link-title">Pesanan</span>
-                        </a>
-                    </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pesanan.index') ? 'active' : '' }}"
+                                href="{{ route('pesanan.index') }}" data-placement="left">
+                                <i class="bi-kanban nav-icon"></i>
+                                <span class="nav-link-title">Pesanan</span>
+                            </a>
+                        </div>
 
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}"
-                            href="{{ route('pembayaran.index') }}" data-placement="left">
-                            <i class="bi bi-credit-card nav-icon"></i>
-                            <span class="nav-link-title">Pembayaran</span>
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}"
-                            href="{{ route('laporan.index') }}" data-placement="left">
-                            <i class="bi bi-file-earmark-bar-graph-fill nav-icon"></i>
-                            <span class="nav-link-title">Laporan</span>
-                        </a>
-                    </div>
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pembayaran.index') ? 'active' : '' }}"
+                                href="{{ route('pembayaran.index') }}" data-placement="left">
+                                <i class="bi bi-credit-card nav-icon"></i>
+                                <span class="nav-link-title">Pembayaran</span>
+                            </a>
+                        </div>
+                    @endrole
+
+                    @role('admin|pemilik')
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active' : '' }}"
+                                href="{{ route('laporan.index') }}" data-placement="left">
+                                <i class="bi bi-file-earmark-bar-graph-fill nav-icon"></i>
+                                <span class="nav-link-title">Laporan</span>
+                            </a>
+                        </div>
+                    @endrole
                 </div>
             </div>
         </div>
