@@ -21,6 +21,7 @@ class BladeServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::if('role', function ($roles) {
+            // dd($roles);
             $roles = str($roles)->explode('|')->toArray();
             return in_array(auth()?->user()?->role?->value, $roles);
         });

@@ -18,7 +18,7 @@ class PesananController extends Controller
         $dataAyams = DataAyam::query()->get();
         $pesanans = Pesanan::query()->get();
         $akuns = Akun::query()->get();
-        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']);
+        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 12, 'prefix' => 'P' . now()->format('ymd') . '-']);
         return view('pesanan.index', compact('pesanans', 'akuns', 'pelanggans', 'dataAyams', 'kode'));
     }
 
@@ -49,7 +49,7 @@ class PesananController extends Controller
     {
         try {
             return response()->json([
-                'kode' => IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 6, 'prefix' => 'PO-']),
+                'kode' => IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 12, 'prefix' => 'P' . now()->format('ymd') . '-']),
                 'tanggal' => now()->format('Y-m-d'),
             ]);
         } catch (\Throwable $th) {
@@ -62,7 +62,7 @@ class PesananController extends Controller
         $pelanggans = Pelanggan::query()->get();
         $dataAyams = DataAyam::query()->get();
         $akuns = Akun::query()->get();
-        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 12, 'prefix' => 'PO' . now()->format('ymd') . '-']);
+        $kode = IdGenerator::generate(['table' => 'pesanan', 'field' => 'kode', 'length' => 12, 'prefix' => 'P' . now()->format('ymd') . '-']);
         return view('pesanan.create', compact('pelanggans', 'dataAyams', 'akuns', 'kode'));
     }
 

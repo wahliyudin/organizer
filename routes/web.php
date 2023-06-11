@@ -6,6 +6,7 @@ use App\Http\Controllers\JenisAkunController;
 use App\Http\Controllers\DataAyamController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\StokController;
 use Illuminate\Support\Facades\Auth;
@@ -87,6 +88,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('pembayaran/{pembayaran:kode}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
         Route::post('pembayaran/{pembayaran:kode}/update', [PembayaranController::class, 'update'])->name('pembayaran.update');
         Route::delete('pembayaran/{pembayaran}/destroy', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+
+        Route::get('pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::post('pengguna/list', [PenggunaController::class, 'list'])->name('pengguna.list');
+        Route::post('pengguna/store', [PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::post('pengguna/{user}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::delete('pengguna/{user}/destroy', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
     });
 
     Route::middleware(['role:admin,pemilik'])->group(function () {

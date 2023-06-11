@@ -39,7 +39,7 @@ class Pembayaran extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 12, 'prefix' => "PO" . now()->format('ymd') . '-']);
+            $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 12, 'prefix' => 'A' . now()->format('ymd') . '-']);
         });
     }
 

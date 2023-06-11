@@ -11,8 +11,8 @@
                     <div class="text-center">
                         <div class="mb-5">
                             <h1 class="display-5">Sign in</h1>
-                            <p>Don't have an account yet? <a class="link" href="{{ route('register') }}">Sign up
-                                    here</a></p>
+                            {{-- <p>Don't have an account yet? <a class="link" href="{{ route('register') }}">Sign up
+                                    here</a></p> --}}
                         </div>
                     </div>
 
@@ -35,8 +35,8 @@
                         <label class="form-label w-100" for="signupSrPassword" tabindex="0">
                             <span class="d-flex justify-content-between align-items-center">
                                 <span>Password</span>
-                                <a class="form-label-link mb-0" href="authentication-reset-password-basic.html">Forgot
-                                    Password?</a>
+                                {{-- <a class="form-label-link mb-0" href="authentication-reset-password-basic.html">Forgot
+                                    Password?</a> --}}
                             </span>
                         </label>
 
