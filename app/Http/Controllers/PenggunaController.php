@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -11,43 +12,28 @@ class PenggunaController extends Controller
 {
     public function index()
     {
-        return view('pengguna.index');
-    }
-
-    public function list()
-    {
-        $data = User::query()->get();
-        return DataTables::of($data)
-            ->editColumn('nama', function (User $user) {
-                return $user->name;
-            })
-            ->editColumn('email', function (User $user) {
-                return $user->email;
-            })
-            ->editColumn('role', function (User $user) {
-                return $user->role->label();
-            })
-            ->editColumn('action', function (User $user) {
-                return view('pengguna.action', compact('user'))->render();
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        $penggunas = User::query()->get();
+        return view('pengguna.index', compact('penggunas'));
     }
 
     public function store(Request $request)
     {
         try {
-            User::query()->updateOrCreate([
-                'id' => $request->key
-            ], [
-                'name' => $request->nama,
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:users,email',
+                'password' => 'required',
+                'role' => 'required',
+            ]);
+            User::query()->create([
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => $request->role,
             ]);
             return response()->json([
-                'message' => 'Berhasil disimpan'
-            ]);
+                'message' => "Berhasil disimpan"
+            ], Response::HTTP_CREATED);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -56,7 +42,35 @@ class PenggunaController extends Controller
     public function edit(User $user)
     {
         try {
-            return response()->json($user);
+            return response()->json([
+                'key' => $user->getKey(),
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function update(Request $request, User $user)
+    {
+        try {
+            $request->validate([
+                'name' => 'required',
+                'email' => "required|unique:users,email,{$user->getKey()},id",
+                'password' => 'required',
+                'role' => 'required',
+            ]);
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => $request->role,
+            ]);
+            return response()->json([
+                'message' => "Berhasil diubah"
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -67,7 +81,7 @@ class PenggunaController extends Controller
         try {
             $user->delete();
             return response()->json([
-                'message' => 'Berhasil dihapus'
+                'message' => "Berhasil dihapus"
             ]);
         } catch (\Throwable $th) {
             throw $th;

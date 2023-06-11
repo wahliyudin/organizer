@@ -90,9 +90,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('pembayaran/{pembayaran}/destroy', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
 
         Route::get('pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
-        Route::post('pengguna/list', [PenggunaController::class, 'list'])->name('pengguna.list');
         Route::post('pengguna/store', [PenggunaController::class, 'store'])->name('pengguna.store');
         Route::post('pengguna/{user}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::post('pengguna/{user}/update', [PenggunaController::class, 'update'])->name('pengguna.update');
         Route::delete('pengguna/{user}/destroy', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
     });
 
