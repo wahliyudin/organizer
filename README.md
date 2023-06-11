@@ -1,7 +1,7 @@
--   [ ] Kode ayam input sendiri
+-   [x] Kode ayam input sendiri
 -   [ ] Kode akun samain kek ujang
 -   [x] Kode pesanan pake tanggal
 -   [x] Kode pembayaran pake tanggal
 -   [ ] Download nota pesanan
--   [ ] Halaman pengguna
--   [ ] Register ilangin
+-   [x] Halaman pengguna
+-   [x] Register ilangin

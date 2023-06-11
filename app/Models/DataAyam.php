@@ -31,16 +31,16 @@ class DataAyam extends Model
         );
     }
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
+    //     });
+    // }
 
-    public function generateKode()
-    {
-        return IdGenerator::generate(['table' => 'data_ayam', 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
-    }
+    // public function generateKode()
+    // {
+    //     return IdGenerator::generate(['table' => 'data_ayam', 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
+    // }
 }

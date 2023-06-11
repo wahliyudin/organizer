@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DataAyamRequest;
 use App\Models\DataAyam;
-use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -13,14 +12,14 @@ class DataAyamController extends Controller
     public function index()
     {
         $dataAyams = DataAyam::query()->get();
-        $kode = (new DataAyam())->generateKode();
-        return view('data-ayam.index', compact('dataAyams', 'kode'));
+        return view('data-ayam.index', compact('dataAyams'));
     }
 
     public function store(DataAyamRequest $request)
     {
         try {
             DataAyam::query()->create([
+                'kode' => $request->kode,
                 'harga' => str($request->harga)->replace('.', ''),
             ]);
             return response()->json([
@@ -47,6 +46,7 @@ class DataAyamController extends Controller
     {
         try {
             $dataAyam->update([
+                'kode' => $request->kode,
                 'harga' => str($request->harga)->replace('.', ''),
             ]);
             return response()->json([

@@ -178,8 +178,7 @@
                     <form class="form-add-modal">
                         <div class="mb-3">
                             <label class="form-label" for="kode">Kode</label>
-                            <input type="text" id="kode" name="kode" readonly value="{{ $kode }}"
-                                class="form-control">
+                            <input type="text" id="kode" name="kode" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="harga">Harga</label>
@@ -257,6 +256,7 @@
 
             $('.add').click(function(e) {
                 e.preventDefault();
+                $('.form-add-modal input[name="kode"]').val('');
                 $('.form-add-modal input[name="harga"]').val('');
                 $('#add-modal .simpan').data('data-ayam', '');
                 $('#add-modal .simpan').removeClass('update-data-ayam');
@@ -316,6 +316,7 @@
                     dataType: "JSON",
                     success: function(response) {
                         $($(target).find('.loading')).hide();
+                        $('.form-add-modal input[name="kode"]').val(response.key);
                         $('.form-add-modal input[name="harga"]').val(response.harga).trigger(
                             'input');
                         $('#add-modal .simpan').data('data-ayam', response.key);
