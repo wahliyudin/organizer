@@ -55,13 +55,13 @@
                             </a>
                         </div>
 
-                        <div class="nav-item">
+                        {{-- <div class="nav-item">
                             <a class="nav-link {{ request()->routeIs('jenis-akun.index') ? 'active' : '' }}"
                                 href="{{ route('jenis-akun.index') }}" data-placement="left">
                                 <i class="bi bi-currency-exchange nav-icon"></i>
                                 <span class="nav-link-title">Jenis Akun</span>
                             </a>
-                        </div>
+                        </div> --}}
 
                         <div class="nav-item">
                             <a class="nav-link {{ request()->routeIs('akun.index') ? 'active' : '' }}"

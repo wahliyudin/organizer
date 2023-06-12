@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('akuns', [AkunController::class, 'index'])->name('akun.index');
         Route::post('akuns/store', [AkunController::class, 'store'])->name('akun.store');
         Route::post('akuns/{akun:kode}/edit', [AkunController::class, 'edit'])->name('akun.edit');
+        Route::post('akuns/{value}/get-number', [AkunController::class, 'getNumber'])->name('akun.get-number');
         Route::post('akuns/{akun:kode}/update', [AkunController::class, 'update'])->name('akun.update');
         Route::delete('akuns/{akun:kode}/destroy', [AkunController::class, 'destroy'])->name('akun.destroy');
         Route::delete('akuns/destroys', [AkunController::class, 'destroys'])->name('akun.destroys');

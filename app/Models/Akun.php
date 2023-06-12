@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\JenisAkun;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +21,11 @@ class Akun extends Model
     protected $fillable = [
         'kode',
         'nama',
-        'kode_jenis_akun'
+        'jenis_akun'
+    ];
+
+    protected $casts = [
+        'jenis_akun' => JenisAkun::class
     ];
 
     protected function kode(): Attribute
@@ -30,16 +35,11 @@ class Akun extends Model
         );
     }
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
-        });
-    }
-
-    public function jenisAkun()
-    {
-        return $this->belongsTo(JenisAkun::class, 'kode_jenis_akun', 'kode');
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->kode = IdGenerator::generate(['table' => $model->table, 'field' => 'kode', 'length' => 6, 'prefix' => "A-"]);
+    //     });
+    // }
 }

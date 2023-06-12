@@ -97,7 +97,7 @@
                                 </td>
                                 <td>{{ $akun->kode }}</td>
                                 <td>{{ $akun->nama }}</td>
-                                <td>{{ $akun->jenisAkun->nama }}</td>
+                                <td>{{ $akun->jenis_akun->label() }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <button
@@ -180,21 +180,25 @@
                 <div class="modal-body">
                     <form class="form-add-modal">
                         <div class="mb-3">
+                            <label class="form-label" for="kode">Kode</label>
+                            <input type="text" readonly id="kode" name="kode" class="form-control">
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="nama">Nama</label>
                             <input type="text" id="nama" name="nama" class="form-control"
                                 placeholder="John Doe">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="kode_jenis_akun">Jenis Akun</label>
+                            <label class="form-label" for="jenis_akun">Jenis Akun</label>
                             <div class="tom-select-custom">
-                                <select class="js-select form-select" name="kode_jenis_akun"
+                                <select class="js-select form-select" name="jenis_akun"
                                     autocomplete="off"data-hs-tom-select-options='{
                                     "placeholder": "Select Jenis Akun..."
                                   }'>
                                     <option selected disabled value="">Pilih Jenis Akun</option>
-                                    @foreach ($jenisAkuns as $jenisAkun)
-                                        <option value="{{ $jenisAkun->getKey() }}">
-                                            {{ $jenisAkun->kode . ' - ' . $jenisAkun->nama }}</option>
+                                    @foreach (\App\Enums\JenisAkun::cases() as $jenisAkun)
+                                        <option value="{{ $jenisAkun->value }}">
+                                            {{ $jenisAkun->kode() . ' - ' . $jenisAkun->label() }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -270,7 +274,7 @@
             $('.add').click(function(e) {
                 e.preventDefault();
                 $('.form-add-modal input[name="nama"]').val('');
-                $('.form-add-modal select[name="kode_jenis_akun"]').val('').trigger('change');
+                $('.form-add-modal select[name="jenis_akun"]').val('').trigger('change');
                 $('#add-modal .simpan').data('akun', '');
                 $('#add-modal .simpan').removeClass('update-akun');
                 $('#add-modal .simpan').addClass('store-akun');
@@ -330,8 +334,8 @@
                     success: function(response) {
                         $($(target).find('.loading')).hide();
                         $('.form-add-modal input[name="nama"]').val(response.nama);
-                        $('.form-add-modal select[name="kode_jenis_akun"]').val(response
-                            .kode_jenis_akun).trigger('change');
+                        $('.form-add-modal select[name="jenis_akun"]').val(response
+                            .jenis_akun).trigger('change');
                         $('#add-modal .simpan').data('akun', response.key);
                         $('#add-modal .simpan').addClass('update-akun');
                         $('#add-modal .simpan').removeClass('store-akun');
@@ -500,6 +504,22 @@
                         })
                     }
                 })
+            });
+
+            $('select[name="jenis_akun"]').change(function(e) {
+                e.preventDefault();
+                var jenisAkun = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: `/akuns/${jenisAkun}/get-number`,
+                    dataType: "JSON",
+                    success: function(response) {
+                        $('input[name="kode"]').val(response.kode);
+                    },
+                    error: function() {
+
+                    }
+                });
             });
         });
     </script>

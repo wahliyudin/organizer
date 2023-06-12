@@ -14,8 +14,9 @@ class AkunRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'kode' => 'required',
             'nama' => 'required',
-            'kode_jenis_akun' => 'required',
+            'jenis_akun' => 'required',
         ];
     }
 }

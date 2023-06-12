@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\JenisAkun;
 use App\Http\Requests\AkunRequest;
 use App\Models\Akun;
-use App\Models\JenisAkun;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,17 +12,17 @@ class AkunController extends Controller
 {
     public function index()
     {
-        $akuns = Akun::query()->with('jenisAkun')->get();
-        $jenisAkuns = JenisAkun::query()->get();
-        return view('akun.index', compact('akuns', 'jenisAkuns'));
+        $akuns = Akun::query()->get();
+        return view('akun.index', compact('akuns'));
     }
 
     public function store(AkunRequest $request)
     {
         try {
             Akun::query()->create([
+                'kode' => $request->kode,
                 'nama' => $request->nama,
-                'kode_jenis_akun' => $request->kode_jenis_akun,
+                'jenis_akun' => $request->jenis_akun,
             ]);
             return response()->json([
                 'message' => "Berhasil disimpan"
@@ -38,7 +38,7 @@ class AkunController extends Controller
             return response()->json([
                 'key' => $akun->getKey(),
                 'nama' => $akun->nama,
-                'kode_jenis_akun' => $akun->kode_jenis_akun,
+                'jenis_akun' => $akun->jenis_akun,
             ]);
         } catch (\Throwable $th) {
             throw $th;
@@ -49,8 +49,9 @@ class AkunController extends Controller
     {
         try {
             $akun->update([
+                'kode' => $request->kode,
                 'nama' => $request->nama,
-                'kode_jenis_akun' => $request->kode_jenis_akun,
+                'jenis_akun' => $request->jenis_akun,
             ]);
             return response()->json([
                 'message' => "Berhasil diubah"
@@ -82,5 +83,40 @@ class AkunController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function getNumber($value)
+    {
+        try {
+            return response()->json([
+                'kode' => $this->generateNumber($value)
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    private function generateNumber($val)
+    {
+        $jenisAkun = match ((int)$val) {
+            JenisAkun::AKTIVA_LANCAR->value => JenisAkun::AKTIVA_LANCAR,
+            JenisAkun::INVESTASI_JANGKA_PANJANG->value => JenisAkun::INVESTASI_JANGKA_PANJANG,
+            JenisAkun::AKTIVA_TETAP->value => JenisAkun::AKTIVA_TETAP,
+            JenisAkun::AKTIVA_TETAP_TIDAK_BERWUJUD->value => JenisAkun::AKTIVA_TETAP_TIDAK_BERWUJUD,
+            JenisAkun::KEWAJIBAN->value => JenisAkun::KEWAJIBAN,
+            JenisAkun::AKTIVA_LAIN_LAIN->value => JenisAkun::AKTIVA_LAIN_LAIN,
+            JenisAkun::KEWAJIBAN_JANGKA_PANJANG->value => JenisAkun::KEWAJIBAN_JANGKA_PANJANG,
+            JenisAkun::EKUITAS->value => JenisAkun::EKUITAS,
+            JenisAkun::PENDAPATAN->value => JenisAkun::PENDAPATAN,
+            JenisAkun::BEBAN->value => JenisAkun::BEBAN,
+            default => 0,
+        };
+        $akun = Akun::query()->where('jenis_akun', $jenisAkun)->latest()->first();
+        if ($akun) {
+            $currentKode = (int) substr($akun->kode, 2) + 1;
+        } else {
+            $currentKode = 1;
+        }
+        return (string)$jenisAkun->kode() . $currentKode;
     }
 }
