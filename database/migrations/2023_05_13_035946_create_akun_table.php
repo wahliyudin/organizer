@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('akun', function (Blueprint $table) {
             $table->string('kode')->primary();
             $table->string('nama');
-            $table->string('jenis_akun');
+            $table->enum('jenis_akun', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
             $table->timestamps();
         });
     }
