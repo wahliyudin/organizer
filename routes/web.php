@@ -89,16 +89,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('pembayaran/{pembayaran:kode}/edit', [PembayaranController::class, 'edit'])->name('pembayaran.edit');
         Route::post('pembayaran/{pembayaran:kode}/update', [PembayaranController::class, 'update'])->name('pembayaran.update');
         Route::delete('pembayaran/{pembayaran}/destroy', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
-
-        Route::get('pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
-        Route::post('pengguna/store', [PenggunaController::class, 'store'])->name('pengguna.store');
-        Route::post('pengguna/{user}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
-        Route::post('pengguna/{user}/update', [PenggunaController::class, 'update'])->name('pengguna.update');
-        Route::delete('pengguna/{user}/destroy', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
     });
 
     Route::middleware(['role:admin,pemilik'])->group(function () {
         Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::post('laporan/jurnal', [LaporanController::class, 'jurnal'])->name('laporan.jurnal');
+    });
+
+    Route::middleware(['role:pemilik'])->group(function () {
+        Route::get('pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::post('pengguna/store', [PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::post('pengguna/{user}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::post('pengguna/{user}/update', [PenggunaController::class, 'update'])->name('pengguna.update');
+        Route::delete('pengguna/{user}/destroy', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
     });
 });
