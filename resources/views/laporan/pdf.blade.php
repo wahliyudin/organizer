@@ -57,20 +57,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($jurnals as $jurnal)
-                @foreach ($jurnal->jurnalDetails as $jurnalDetail)
-                    <tr style="border: 1px solid black;">
-                        @if ($loop->iteration == 1)
-                            <td style="border: 1px solid black;">{{ $jurnal->kode }}</td>
-                        @else
-                            <td style="border: 1px solid black;"></td>
-                        @endif
-                        <td style="border: 1px solid black;">{{ $jurnalDetail->akun?->nama }}</td>
-                        <td style="border: 1px solid black;">{{ number_format($jurnalDetail->debet, 0, ',', '.') }}</td>
-                        <td style="border: 1px solid black;">{{ number_format($jurnalDetail->kredit, 0, ',', '.') }}
-                        </td>
-                    </tr>
-                @endforeach
+            @foreach ($data as $item)
+                <tr style="border: 1px solid black;">
+                    <td style="border: 1px solid black;">{{ $item['kode_jurnal'] }}</td>
+                    <td style="border: 1px solid black;">{{ $item['akun'] }}</td>
+                    <td style="border: 1px solid black;">{{ $item['debet'] }}</td>
+                    <td style="border: 1px solid black;">{{ $item['kredit'] }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>

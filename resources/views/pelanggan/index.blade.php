@@ -29,15 +29,6 @@
                         <button type="button" class="btn btn-outline-danger btn-sm mb-2 mb-sm-0 me-2 delete-all">
                             <i class="bi-trash"></i> Delete
                         </button>
-                        {{-- <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-archive"></i> Archive
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0 me-2" href="javascript:;">
-                            <i class="bi-upload"></i> Publish
-                        </a>
-                        <a class="btn btn-white btn-sm mb-2 mb-sm-0" href="javascript:;">
-                            <i class="bi-x-lg"></i> Unpublish
-                        </a> --}}
                     </div>
                 </div>
                 <!-- End Datatable Info -->
