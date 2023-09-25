@@ -72,14 +72,6 @@
                         </div>
 
                         <div class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('pengguna.index') ? 'active' : '' }}"
-                                href="{{ route('pengguna.index') }}" data-placement="left">
-                                <i class="bi bi-people-fill nav-icon"></i>
-                                <span class="nav-link-title">Pengguna</span>
-                            </a>
-                        </div>
-
-                        <div class="nav-item">
                             <a class="nav-link {{ request()->routeIs('pesanan.index') ? 'active' : '' }}"
                                 href="{{ route('pesanan.index') }}" data-placement="left">
                                 <i class="bi-kanban nav-icon"></i>
@@ -102,6 +94,16 @@
                                 href="{{ route('laporan.index') }}" data-placement="left">
                                 <i class="bi bi-file-earmark-bar-graph-fill nav-icon"></i>
                                 <span class="nav-link-title">Laporan</span>
+                            </a>
+                        </div>
+                    @endrole
+
+                    @role('pemilik')
+                        <div class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('pengguna.index') ? 'active' : '' }}"
+                                href="{{ route('pengguna.index') }}" data-placement="left">
+                                <i class="bi bi-people-fill nav-icon"></i>
+                                <span class="nav-link-title">Pengguna</span>
                             </a>
                         </div>
                     @endrole
